@@ -1,0 +1,17 @@
+@import "src/assets/scss/consts";
+
+a {
+  color: $link;
+}
+a:hover {
+  color: $link-hover;
+}
+.v-application {
+  color: $text;
+}
+.v-app-bar.v-toolbar {
+  height: 64px;
+}
+.v-app-bar.v-toolbar:not(.v-toolbar--flat) {
+  box-shadow: none;
+}
