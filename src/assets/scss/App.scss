@@ -2,9 +2,11 @@
 
 a {
   color: $link;
-}
-a:hover {
-  color: $link-hover;
+  text-decoration: none;
+  &:hover {
+    color: $link-hover;
+    text-decoration: underline;
+  }
 }
 .v-application {
   color: $text;

@@ -1,44 +1,54 @@
 <template>
-  <v-container fluid class="main-menu">
+  <v-container
+    fluid
+    class="main-menu spacing-playground pa-6"
+  >
     <v-row class="text-center">
-      <nav>
-        <router-link to="/dashboard" class="main-menu__link">
-          <v-img
-            :src="require('../assets/logo.svg')"
-            class="main-menu__link__logo"
-            contain
-          />
-        </router-link>
-<!--        </a>-->
-<!--        <ul>-->
-<!--          <li></li>-->
-<!--        </ul>-->
-      </nav>
+      <router-link
+        key="logo"
+        to="/"
+      >
+        <v-img
+          :src="require('/src/assets/logo.svg')"
+          class="main-menu__logo"
+          contain
+        />
+      </router-link>
+      <router-link
+        v-for="(menuItem, key) in menu"
+        :key="key"
+        :to="menuItem.path"
+        class="main-menu__routes pl-8"
+      >
+        {{ menuItem.title }}
+      </router-link>
     </v-row>
   </v-container>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { mainMenu } from '@/static/mainMenu';
 
 export default defineComponent({
   name: 'MainMenu',
 
   setup() {
-    return {}
-  }
+    return {
+      menu: mainMenu,
+    };
+  },
 });
 </script>
 
 <style lang="scss" scoped>
   .main-menu {
-    &__link {
-      display: block;
-      padding: 0 12px 3px;
-      &__logo {
-        width: 130px;
-        height: 40px;
-      }
+    &__logo {
+      width: 130px;
+    }
+    &__routes {
+      margin: auto 0;
+      font-size: 14px;
     }
   }
 </style>

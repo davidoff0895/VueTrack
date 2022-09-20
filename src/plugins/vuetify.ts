@@ -14,7 +14,7 @@ export default createVuetify({
           surface: '#23272b',
         },
       },
-    }
+    },
   },
-})
+});
 // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
