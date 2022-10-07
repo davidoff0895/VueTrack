@@ -2,6 +2,7 @@
   <v-app>
     <v-app-bar app>
       <MainMenu />
+      <AccountSection />
     </v-app-bar>
     <v-main>
       <v-container fluid>
@@ -14,10 +15,11 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import MainMenu from '@/components/MainMenu.vue';
+import AccountSection from '@/components/AccountSection.vue';
 
 export default defineComponent({
   name: 'App',
-  components: { MainMenu },
+  components: { AccountSection, MainMenu },
   data() {
     return {
       //

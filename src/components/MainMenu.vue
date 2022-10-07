@@ -7,6 +7,7 @@
       <router-link
         key="logo"
         to="/"
+        class="ml-3"
       >
         <v-img
           :src="require('/src/assets/logo.svg')"
@@ -18,7 +19,7 @@
         v-for="(menuItem, key) in menu"
         :key="key"
         :to="menuItem.path"
-        class="main-menu__routes pl-8"
+        class="main-menu__routes ml-8"
       >
         {{ menuItem.title }}
       </router-link>
