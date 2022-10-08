@@ -1,8 +1,7 @@
 <template>
   <v-app>
     <v-app-bar app>
-      <MainMenu />
-      <AccountSection />
+      <HeaderSection />
     </v-app-bar>
     <v-main>
       <v-container fluid>
@@ -14,12 +13,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import MainMenu from '@/components/MainMenu.vue';
-import AccountSection from '@/components/AccountSection.vue';
+import HeaderSection from '@/components/HeaderSection.vue';
 
 export default defineComponent({
   name: 'App',
-  components: { AccountSection, MainMenu },
+  components: { HeaderSection },
   data() {
     return {
       //
