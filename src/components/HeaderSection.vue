@@ -15,7 +15,7 @@
 
 <script>
 import MainMenu from '@/components/MainMenu';
-import AccountSection from '@/components/AccountSection';
+import AccountSection from '@/components/account/AccountSection';
 export default {
   name: 'HeaderSection',
   components: { AccountSection, MainMenu },

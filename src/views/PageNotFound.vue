@@ -8,7 +8,7 @@
       class="ma-16"
     >
       <v-col class="v-col-md-3">
-        <v-img :src="require('/src/assets/svg/404.svg')" />
+        <v-img :src="require('@/assets/svg/404.svg')" />
       </v-col>
       <v-col class="v-col-md-3 d-flex not-found__text">
         <v-card>

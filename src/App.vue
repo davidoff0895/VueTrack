@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <v-app-bar app>
-      <HeaderSection />
-    </v-app-bar>
+    <!--    <v-app-bar app>-->
+    <HeaderSection />
+    <!--    </v-app-bar>-->
     <v-main>
       <v-container fluid>
         <router-view />

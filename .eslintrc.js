@@ -20,6 +20,7 @@ module.exports = {
     'no-trailing-spaces': 'warn',
     'vue/valid-attribute-name': 'off',
     'vue/valid-model-definition': 'off',
+    '@typescript-eslint/no-var-requires': 'off',
     'comma-dangle': ['warn', 'always-multiline'],
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
