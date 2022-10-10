@@ -2,7 +2,7 @@
   <div class="account position-relative">
     <div class="d-flex justify-end">
       <v-icon
-        v-for="({icon, content}, key) in icons"
+        v-for="({icon, content}, key) in menuItems"
         :key="key"
         :icon="icon"
         @click="setActiveComponent(content)"
@@ -14,23 +14,23 @@
         alt="user"
       >
     </div>
-    <div class="account__tooltip">
-      <component
-        :is="activeSection"
-      />
-    </div>
+    <component
+      v-if="activeSection"
+      :is="activeSection"
+      @close="setActiveComponent('')"
+    />
   </div>
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import AccountSettings from '@/components/account/AccountSettings.vue';
-import AccountHelp from '@/components/account/AccountHelp.vue';
+import AccountHelp from '@/components/account/help/AccountHelp.vue';
 
 export default defineComponent({
   name: 'AccountSection',
   components: { AccountHelp, AccountSettings },
   setup() {
-    const icons = [
+    const menuItems = [
       { icon: 'mdi-help-circle-outline', content: 'AccountHelp' },
       { icon: 'mdi-cog-outline', content: 'AccountSettings' },
     ];
@@ -38,7 +38,7 @@ export default defineComponent({
     const setActiveComponent = (content: string) =>
       activeSection.value = content;
     return {
-      icons,
+      menuItems,
       activeSection,
       setActiveComponent,
     };
@@ -48,6 +48,9 @@ export default defineComponent({
 
 <style lang="scss">
 .account {
+  .v-icon {
+    color: $gray
+  }
   &__icon {
     cursor: pointer;
     transition: color .3s ease-out;
@@ -61,7 +64,7 @@ export default defineComponent({
   &__tooltip {
     position: absolute;
     top: 45px;
-    right: 130px;
+    right: 90px;
     z-index: 1;
   }
 }
