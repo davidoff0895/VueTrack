@@ -36,18 +36,10 @@
   </v-container>
 </template>
 
-<script>
+<script setup lang="ts">
 import { globalMenu } from '@/static/mainMenu';
 
-export default {
-  name: 'PageNotFound',
-
-  setup() {
-    return {
-      menu: globalMenu,
-    };
-  },
-};
+const menu = globalMenu;
 </script>
 
 <style lang="scss" scoped>

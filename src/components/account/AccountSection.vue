@@ -21,29 +21,16 @@
     />
   </div>
 </template>
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-import AccountSettings from '@/components/account/AccountSettings.vue';
+<script setup lang="ts">
+import { ref } from 'vue';
 import AccountHelp from '@/components/account/help/AccountHelp.vue';
 
-export default defineComponent({
-  name: 'AccountSection',
-  components: { AccountHelp, AccountSettings },
-  setup() {
-    const menuItems = [
-      { icon: 'mdi-help-circle-outline', content: 'AccountHelp' },
-      { icon: 'mdi-cog-outline', content: 'AccountSettings' },
-    ];
-    const activeSection = ref('');
-    const setActiveComponent = (content: string) =>
-      activeSection.value = content;
-    return {
-      menuItems,
-      activeSection,
-      setActiveComponent,
-    };
-  },
-});
+const menuItems = [
+  { icon: 'mdi-help-circle-outline', content: AccountHelp },
+];
+const activeSection = ref('');
+const setActiveComponent = (content: string) =>
+  activeSection.value = content;
 </script>
 
 <style lang="scss">

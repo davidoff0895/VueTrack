@@ -6,7 +6,7 @@
       class="ml-3"
     >
       <v-img
-        :src="require('@/assets/logo.svg')"
+        :src="require('@/assets/svg/logo.svg')"
         class="main-menu__logo"
         contain
       />

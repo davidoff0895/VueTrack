@@ -3,7 +3,7 @@
     v-model="isOpenedDialog"
     width="270"
     class="help"
-    transition
+    transition="none"
     @click:outside="closeDialog"
   >
     <v-card
@@ -16,12 +16,15 @@
           :key="index"
           :href="link"
           target="_blank"
-          class="d-block mt-2 help__text"
+          class="d-block mt-2 fz-13"
         >{{ text }}
         </a>
-        <AboutAppDialog class="mt-2 help__text" />
+        <AboutAppDialog
+          class="mt-2 fz-13"
+          @close="closeDialog"
+        />
       </v-card-text>
-      <div class="help__footer mt-5">
+      <div class="help__footer mt-5 fz-13">
         <div class="mt-4">
           <a href="https://www.jetbrains.com/youtrack/">VueTrack</a>
           - powerful project management for all your teams by JetBrains
@@ -32,7 +35,6 @@
         </div>
       </div>
     </v-card>
-    <AboutAppDialog />
   </v-dialog>
 </template>
 
@@ -42,9 +44,7 @@ import AboutAppDialog from '@/components/account/help/AboutAppDialog.vue';
 import { aboutItems } from '@/static/aboutItems';
 
 const isOpenedDialog = ref(true);
-const emit = defineEmits<{
-  (e: 'close'): void
-}>();
+const emit = defineEmits(['close']);
 const items = aboutItems;
 const closeDialog = () => emit('close');
 </script>
@@ -61,9 +61,6 @@ const closeDialog = () => emit('close');
   &__card {
     background: $dark;
     padding: 10px 15px;
-  }
-  &__text, &__footer {
-    font-size: 13px;
   }
   &__footer {
     color: $gray;
