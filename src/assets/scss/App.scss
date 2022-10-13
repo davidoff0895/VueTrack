@@ -40,6 +40,9 @@ a {
         background: $line;
       }
     }
+    .v-input__details {
+      display: none;
+    }
   }
 }
 .v-radio {
