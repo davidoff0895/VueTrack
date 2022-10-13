@@ -33,7 +33,9 @@
           </template>
 
           <v-list class="account-profile__list__sub">
-            <div>
+            <v-radio-group
+              v-model="appTheme"
+            >
               <div class="list-title mt-1">
                 THEME
               </div>
@@ -45,7 +47,7 @@
                 :label="label"
                 :value="value"
               />
-            </div>
+            </v-radio-group>
             <div class="menu-list-footer pt-3 fz-13 text-center">
               <router-link :to="routerParams">
                 <div class="mt-4">
@@ -65,16 +67,22 @@
 
 <script setup lang="ts">
 import { RouteLocation } from 'vue-router';
+import { ref } from 'vue';
+import { AppModes } from '@/static/enums/appModes';
 
 const radioBtns = [
-  { label: 'Light', value: '1' },
-  { label: 'Dark', value: '2' },
-  { label: 'Sync with OS', value: '3' },
+  { label: 'Light', value: AppModes.LIGHT },
+  { label: 'Dark', value: AppModes.DARK },
+  { label: 'Sync with OS', value: AppModes.SYNC_OS },
 ];
 const routerParams: RouteLocation = {
   path: '/user/me',
   query: { tab: 'workspace' },
 };
+const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)')
+  .matches;
+const appMode = isDarkMode ? AppModes.SYNC_OS : AppModes.LIGHT;
+const appTheme = ref(appMode);
 </script>
 
 <style lang="scss">
