@@ -18,3 +18,53 @@ a {
 .fz-13 {
   font-size: 13px;
 }
+.fz-14 {
+  font-size: 14px;
+}
+.v-menu {
+  .v-list {
+    padding: 11px 16px 16px;
+    .list-title {
+      color: $secondary;
+      letter-spacing: 1.5px;
+      font-size: 12px;
+    }
+    .menu-list-footer {
+      color: $secondary;
+      &::before {
+        position: absolute;
+        left: 0;
+        content: '';
+        width: 100%;
+        height: 1px;
+        background: $line;
+      }
+    }
+  }
+}
+.v-radio {
+  .v-label {
+    font-size: 13px;
+    opacity: unset;
+  }
+}
+.v-list-item {
+  padding: unset;
+  font-size: 14px;
+}
+.v-list-item--density-default.v-list-item--one-line {
+  min-height: auto;
+}
+.v-list-item__content {
+  color: $link;
+  cursor: pointer;
+  &:hover {
+    color: $link-hover;
+  }
+}
+.v-selection-control--density-default {
+  --v-selection-control-size: 25px;
+}
+.v-selection-control__input {
+  justify-content: unset;
+}

@@ -11,7 +11,7 @@
         <v-img :src="require('@/assets/svg/404.svg')" />
       </v-col>
       <v-col class="v-col-md-3 d-flex not-found__text">
-        <v-card>
+        <v-card color="background">
           <v-card-title class="text-h5">
             Nope, can't find it!
           </v-card-title>

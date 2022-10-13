@@ -1,10 +1,5 @@
 <template>
   <div class="about">
-    <a
-      href="#"
-      @click.prevent="openDialog"
-    >About VueTrack</a>
-
     <v-dialog
       v-model="isOpenedDialog"
       max-width="465"
@@ -45,10 +40,9 @@ const links = [
   },
 ];
 const emit = defineEmits(['close']);
-const isOpenedDialog = ref(false);
+const isOpenedDialog = ref(true);
 const copyRightText = ref(`Copyright ©
   2009–${new Date().getFullYear()} JetBrains s.r.o.`);
-const openDialog = () => isOpenedDialog.value = true;
 const closeDialog = () => emit('close');
 </script>
 

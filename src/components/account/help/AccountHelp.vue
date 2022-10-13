@@ -1,30 +1,36 @@
 <template>
-  <v-dialog
-    v-model="isOpenedDialog"
-    width="270"
-    class="help"
+  <v-menu
+    class="account-help"
     transition="none"
-    @click:outside="closeDialog"
+    width="270"
   >
-    <v-card
-      dark
-      class="help__card"
-    >
-      <v-card-text>
-        <a
-          v-for="({text, link}, index) in items"
-          :key="index"
-          :href="link"
-          target="_blank"
-          class="d-block mt-2 fz-13"
-        >{{ text }}
-        </a>
-        <AboutAppDialog
-          class="mt-2 fz-13"
-          @close="closeDialog"
-        />
-      </v-card-text>
-      <div class="help__footer mt-5 fz-13">
+    <template #activator="{ props }">
+      <v-icon
+        color="#80929d"
+        icon="mdi-help-circle-outline"
+        class="ml-5 mt-1 account-help__icon"
+        v-bind="props"
+      />
+      <AboutAppDialog
+        v-if="isOpenedDialog"
+        @close="closeAbout"
+      />
+    </template>
+    <v-list class="account-help__list">
+      <a
+        v-for="({text, link}, index) in items"
+        :key="index"
+        :href="link"
+        target="_blank"
+        class="d-block mt-2 fz-14"
+      >{{ text }}
+      </a>
+      <a
+        href="#"
+        class="d-block mt-2 fz-14"
+        @click.prevent="openAbout"
+      >About VueTrack</a>
+      <div class="menu-list-footer mt-2 pt-3 fz-13">
         <div class="mt-4">
           <a href="https://www.jetbrains.com/youtrack/">VueTrack</a>
           - powerful project management for all your teams by JetBrains
@@ -34,8 +40,8 @@
           <div>Mon, Sep 26, 2022</div>
         </div>
       </div>
-    </v-card>
-  </v-dialog>
+    </v-list>
+  </v-menu>
 </template>
 
 <script setup lang="ts">
@@ -43,41 +49,22 @@ import { ref } from 'vue';
 import AboutAppDialog from '@/components/account/help/AboutAppDialog.vue';
 import { aboutItems } from '@/static/aboutItems';
 
-const isOpenedDialog = ref(true);
-const emit = defineEmits(['close']);
 const items = aboutItems;
-const closeDialog = () => emit('close');
+const isOpenedDialog = ref(false);
+const openAbout = () => isOpenedDialog.value = true;
+const closeAbout = () => {
+  isOpenedDialog.value = false;
+};
 </script>
 
 <style lang="scss">
-.help {
-  .v-overlay__content {
-    right: 80px;
-    top: 30px;
-  }
-  .v-overlay__scrim {
-    background: none;
-  }
-  &__card {
-    background: $dark;
-    padding: 10px 15px;
-  }
-  &__footer {
-    color: $gray;
-    &::before {
-      position: absolute;
-      left: 0;
-      content: '';
-      width: 100%;
-      height: 1px;
-      background: $line;
+.account-help {
+  &__icon {
+    cursor: pointer;
+    transition: color .3s ease-out;
+    &:hover {
+      color: $icon-hover !important;
     }
-  }
-}
-.help.v-dialog .v-overlay__content > .v-card {
-  border-radius: 2px;
-  > .v-card-text {
-    padding: unset;
   }
 }
 </style>

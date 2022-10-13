@@ -2,7 +2,7 @@
   <v-container
     fluid
   >
-    <v-row>
+    <v-row class="align-center">
       <v-col md="9">
         <MainMenu />
       </v-col>
