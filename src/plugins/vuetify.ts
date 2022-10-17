@@ -15,6 +15,11 @@ export default createVuetify({
           surface: '#111314',
         },
       },
+      light: {
+        colors: {
+          primary: '#008eff',
+        },
+      },
     },
   },
 });

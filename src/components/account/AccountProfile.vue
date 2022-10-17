@@ -19,6 +19,7 @@
       </v-list-item>
       <v-list-item>
         <v-menu
+          open-on-hover
           location="start"
           transition="none"
         >
@@ -40,7 +41,7 @@
                 THEME
               </div>
               <v-radio
-                v-for="({label, value}, index) in radioBtns"
+                v-for="({label, value}, index) in radioButtons"
                 :key="index"
                 color="primary"
                 class="account-profile__list__sub__label mt-2 fz-13"
@@ -66,23 +67,29 @@
 </template>
 
 <script setup lang="ts">
-import { RouteLocation } from 'vue-router';
-import { ref } from 'vue';
-import { AppModes } from '@/static/enums/appModes';
+import { ref, watch } from 'vue';
+import { useTheme } from 'vuetify';
+import appMode from '@/utils/appMode';
 
-const radioBtns = [
-  { label: 'Light', value: AppModes.LIGHT },
-  { label: 'Dark', value: AppModes.DARK },
-  { label: 'Sync with OS', value: AppModes.SYNC_OS },
+const theme = useTheme();
+
+const radioButtons = [
+  { label: 'Light', value: appMode.LIGHT },
+  { label: 'Dark', value: appMode.DARK },
+  { label: 'Sync with OS', value: appMode.SYNC_OS },
 ];
-const routerParams: RouteLocation = {
+const routerParams = {
   path: '/user/me',
   query: { tab: 'workspace' },
 };
-const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)')
-  .matches;
-const appMode = isDarkMode ? AppModes.SYNC_OS : AppModes.LIGHT;
-const appTheme = ref(appMode);
+
+const appTheme = ref(appMode.mode);
+
+watch(appTheme, (newMode) => {
+  theme.global.name.value = newMode === appMode.SYNC_OS ?
+    appMode.userPcMode : newMode;
+  appMode.setAppMode(newMode);
+}, { immediate: true });
 </script>
 
 <style lang="scss">
