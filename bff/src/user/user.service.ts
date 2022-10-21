@@ -1,4 +1,9 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from '@/user/entities/user.entity';
 import { Model } from 'mongoose';
@@ -7,6 +12,7 @@ import * as bcrypt from 'bcrypt';
 import { PaginationDto } from '@/common/dto/pagination.dto';
 import userConfiguration from '@/user/config/user.config';
 import { ConfigType } from '@nestjs/config';
+import { UserErrors } from '@/user/const/userStatuses';
 
 @Injectable()
 export class UserService {
@@ -35,6 +41,12 @@ export class UserService {
     return UserService.mapUserToDto(user);
   }
   async create(createUserDto: CreateUserDto): Promise<UserDto> {
+    const existedUser = await this.userModel
+      .findOne({ login: createUserDto.login })
+      .exec();
+    if (existedUser) {
+      throw new ConflictException(UserErrors.LOGIN);
+    }
     const user = new this.userModel({
       login: createUserDto.login,
       name: createUserDto.login,

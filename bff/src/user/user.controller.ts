@@ -6,7 +6,7 @@ import { UserPipe } from '@/user/pipes/user.pipe';
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
-  @Post('/create')
+  @Post('/new')
   @UsePipes(new UserPipe())
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
