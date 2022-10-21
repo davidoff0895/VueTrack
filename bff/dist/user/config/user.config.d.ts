@@ -1,6 +1,2 @@
-declare const _default: (() => {
-    avatarUrl: string;
-}) & import("@nestjs/config").ConfigFactoryKeyHost<{
-    avatarUrl: string;
-}>;
+declare const _default: any;
 export default _default;
