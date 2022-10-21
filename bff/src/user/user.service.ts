@@ -4,7 +4,7 @@ import { User } from '@/user/entities/user.entity';
 import { Model } from 'mongoose';
 import { CreateUserDto, UserDto } from '@/user/dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
-import { PaginationDto } from '@/dto/pagination.dto';
+import { PaginationDto } from '@/common/dto/pagination.dto';
 import userConfiguration from '@/user/config/user.config';
 import { ConfigType } from '@nestjs/config';
 
