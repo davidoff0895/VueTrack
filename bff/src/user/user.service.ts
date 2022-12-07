@@ -7,7 +7,11 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from '@/user/entities/user.entity';
 import { Model } from 'mongoose';
-import { CreateUserDto, UserDto } from '@/user/dto/create-user.dto';
+import {
+  CreateUserDto,
+  mapUserToDto,
+  UserDto,
+} from '@/user/dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { PaginationDto } from '@/common/dto/pagination.dto';
 import userConfiguration from '@/user/config/user.config';
@@ -36,26 +40,24 @@ export class UserService {
     }
     return user;
   }
-  async getUser(id: string): Promise<UserDto> {
-    const user = await this.findOne(id);
-    return UserService.mapUserToDto(user);
+  async getUser(login: string): Promise<User> {
+    login = login.toLowerCase();
+    return this.userModel.findOne({ login });
   }
   async create(createUserDto: CreateUserDto): Promise<UserDto> {
-    const existedUser = await this.userModel
-      .findOne({ login: createUserDto.login })
-      .exec();
+    const existedUser = await this.getUser(createUserDto.login);
     if (existedUser) {
       throw new ConflictException(UserErrors.LOGIN);
     }
     const user = new this.userModel({
-      login: createUserDto.login,
+      login: createUserDto.login.toLowerCase(),
       name: createUserDto.login,
       password: await UserService.getHashPassword(createUserDto.password),
       avatar: this.generateAvatar(createUserDto.login),
       requiredTwoFactorAuthentication: false,
     });
     const newUser = await user.save();
-    return UserService.mapUserToDto(newUser);
+    return mapUserToDto(newUser);
   }
   async remove(id: string) {
     const user = await this.findOne(id);
@@ -69,15 +71,5 @@ export class UserService {
 
   private generateAvatar(userName: string): string {
     return `${this.AVATAR_URL}?username=${userName}`;
-  }
-
-  private static mapUserToDto(user: User): UserDto {
-    return {
-      id: user._id,
-      name: user.name,
-      login: user.login,
-      avatar: user.avatar,
-      requiredTwoFactorAuthentication: user.requiredTwoFactorAuthentication,
-    };
   }
 }

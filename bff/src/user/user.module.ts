@@ -16,7 +16,8 @@ import userConfig from '@/user/config/user.config';
     ]),
     ConfigModule.forFeature(userConfig),
   ],
-  providers: [UserService],
   controllers: [UserController],
+  providers: [UserService],
+  exports: [UserService],
 })
 export class UserModule {}
