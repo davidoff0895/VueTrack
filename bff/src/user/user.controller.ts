@@ -5,6 +5,7 @@ import {
   UseGuards,
   UsePipes,
   Request,
+  Get,
 } from '@nestjs/common';
 import {
   CreateUserDto,
@@ -14,6 +15,7 @@ import {
 import { UserService } from '@/user/user.service';
 import { UserPipe } from '@/user/pipes/user.pipe';
 import { LocalAuthGuard } from '@/auth/local.auth.guard';
+import { AuthenticatedGuard } from '@/auth/authenticated.guard';
 
 @Controller('user')
 export class UserController {
@@ -29,5 +31,17 @@ export class UserController {
   @Post('/login')
   login(@Request() req): UserDto {
     return mapUserToDto(req.user);
+  }
+
+  @UseGuards(AuthenticatedGuard)
+  @Get('/protected')
+  getHello(@Request() req): string {
+    return req.user;
+  }
+
+  @Post('/logout')
+  logout(@Request() req): any {
+    req.session.destroy();
+    return { msg: 'The user session has ended' };
   }
 }
