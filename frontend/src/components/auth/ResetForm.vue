@@ -1,62 +1,45 @@
 <template>
-  <v-form class="auth-form">
-    <div class="text-black text-center auth-form__title mt-3 mb-7">
-      Log in to VueTrack
+  <v-form class="reset-form">
+    <div class="text-black text-center reset-form__title mt-3 mb-7">
+      Reset password for VueTrack
     </div>
     <v-text-field
       v-model="user.login"
       :error-messages="validationErrors.login"
-      placeholder="Username or Email"
+      placeholder="Email"
       required
       @input="$v.login.$touch"
     />
-    <v-text-field
-      type="password"
-      v-model="user.password"
-      :error-messages="validationErrors.password"
-      placeholder="Password"
-      required
-      @input="$v.password.$touch"
-    />
-    <div class="d-flex mt-3">
-      <v-checkbox
-        v-model="user.isRemember"
-        label="Remember me"
-        required
-      />
-      <router-link
-        to="/auth/restore"
-        class="auth-form__link fz-14 ring-link"
-      >
-        Reset password
-      </router-link>
-    </div>
     <v-btn
       class="w-100 mt-2"
       color="primary"
+      :disabled="$v.$invalid"
       @click="submit"
     >
-      Log in
+      Reset password
     </v-btn>
+    <router-link
+      to="/auth/login"
+      class="reset-form__link fz-14 ring-link d-block text-center mt-3"
+    >
+      Go back to login page
+    </router-link>
   </v-form>
 </template>
 
 <script setup lang="ts">
 import { onMounted, reactive } from 'vue';
-import { required } from '@vuelidate/validators';
+import { required, email } from '@vuelidate/validators';
 import { useValidation } from '@/utils/validation';
 import { onBeforeRouteLeave, useRoute, useRouter } from 'vue-router';
 import { global } from '@/consts/global';
 
 const rules = {
-  login: { required },
-  password: { required },
+  login: { required, email },
 };
 
 const user = reactive({
   login: null,
-  password: null,
-  isRemember: false,
 });
 
 const { $v, validationErrors } = useValidation(rules, user);
@@ -80,7 +63,7 @@ const submit = async () => {
 </script>
 
 <style lang="scss" scoped>
-.auth-form {
+.reset-form {
   width: 280px;
   &__title {
     font-size: 20px;

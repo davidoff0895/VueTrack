@@ -1,5 +1,14 @@
 <template>
-  <router-view />
+  <div class="d-flex justify-center align-center h-100">
+    <div>
+      <v-img
+        :src="require('@/assets/svg/logo.svg')"
+        width="90"
+        class="ma-auto"
+      />
+      <router-view />
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">

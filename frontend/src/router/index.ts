@@ -3,6 +3,7 @@ import HomeView from '@/views/HomeView.vue';
 import NotFoundView from '@/views/NotFoundView.vue';
 import AuthView from '@/views/AuthView.vue';
 import LoginForm from '@/components/auth/LoginForm.vue';
+import ResetForm from '@/components/auth/ResetForm.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -20,12 +21,20 @@ const routes: Array<RouteRecordRaw> = [
     path: '/auth',
     name: 'auth',
     component: AuthView,
-    children: [{
-      path: 'login',
-      name: 'login',
-      component: LoginForm,
-      meta: { title: 'Log in to VueTrack' },
-    }],
+    children: [
+      {
+        path: 'login',
+        name: 'login',
+        component: LoginForm,
+        meta: { title: 'Log in to VueTrack' },
+      },
+      {
+        path: 'restore',
+        name: 'restore',
+        component: ResetForm,
+        meta: { title: 'Reset password for VueTrack' },
+      },
+    ],
   },
   {
     path: '/:pathMatch(.*)*',
