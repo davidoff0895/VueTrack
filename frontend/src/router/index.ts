@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import HomeView from '@/views/HomeView.vue';
-import PageNotFound from '@/views/PageNotFound.vue';
+import NotFoundView from '@/views/NotFoundView.vue';
+import AuthView from '@/views/AuthView.vue';
+import LoginForm from '@/components/auth/LoginForm.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -11,16 +13,24 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/about',
     name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ '@/views/AboutView.vue'),
   },
   {
+    path: '/auth',
+    name: 'auth',
+    component: AuthView,
+    children: [{
+      path: 'login',
+      name: 'login',
+      component: LoginForm,
+      meta: { title: 'Log in to VueTrack' },
+    }],
+  },
+  {
     path: '/:pathMatch(.*)*',
-    name: '404 Not found',
-    component: PageNotFound,
+    name: '404',
+    component: NotFoundView,
   },
 ];
 

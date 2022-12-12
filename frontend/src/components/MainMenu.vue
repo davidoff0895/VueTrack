@@ -3,13 +3,18 @@
     <router-link
       key="logo"
       to="/"
-      class="ml-3"
+      class="ml-3 main-menu__link"
     >
-      <v-img
-        :src="require('@/assets/svg/logo.svg')"
-        class="main-menu__logo"
-        contain
-      />
+      <v-card class="d-flex main-menu__logo">
+        <v-img
+          :src="require('@/assets/svg/logo.svg')"
+          class="main-menu__logo__img"
+          contain
+        />
+        <v-card-title class="main-menu__logo__text">
+          VueTrack
+        </v-card-title>
+      </v-card>
     </router-link>
     <router-link
       v-for="(menuItem, key) in menu"
@@ -22,24 +27,29 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
 import { mainMenu } from '@/static/mainMenu';
 
-export default defineComponent({
-  name: 'MainMenu',
-  setup() {
-    return {
-      menu: mainMenu,
-    };
-  },
-});
+const menu = mainMenu;
+
 </script>
 
 <style lang="scss" scoped>
   .main-menu {
+    &__link {
+      text-decoration: none;
+    }
     &__logo {
-      width: 130px;
+      background: none;
+      box-shadow: none;
+      &__img {
+        width: 35px;
+      }
+      &__text {
+        padding: 8px;
+        font-weight: bold;
+        color: #ffffff;
+      }
     }
     &__routes {
       margin: auto 0;

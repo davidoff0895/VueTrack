@@ -1,3 +1,94 @@
+body {
+  #app {
+    input::placeholder {
+      color: $ring-text-color;
+      font-size: 12px;
+      opacity: .65;
+    }
+    .v-field__outline {
+      &::after {
+        content: none;
+      }
+    }
+  }
+  input[type=text], input[type=password] {
+    font-size: 12px;
+    padding: 0;
+    color: $ring-text-color;
+    background: none;
+    background-color: unset;
+    &:hover {
+      background: none;
+    }
+  }
+  .v-field__outline {
+    --v-field-border-opacity: 1;
+    color: $ring-borders-color;
+  }
+  .v-input--density-default {
+    --v-input-control-height: 24px;
+  }
+  .v-input--density-default .v-field--variant-solo, .v-input--density-default .v-field--variant-filled {
+    --v-input-control-height: 24px;
+  }
+  .v-field--variant-filled .v-field__overlay {
+    background-color: transparent;
+  }
+  .v-field--variant-filled.v-field--focused .v-field__overlay {
+    opacity: 0;
+  }
+  .v-selection-control--density-default {
+    --v-selection-control-size: 14px;
+  }
+  .v-theme {
+    &--light {
+      --v-medium-emphasis-opacity: 1;
+    }
+    &--dark {
+      --v-medium-emphasis-opacity: 1;
+    }
+  }
+  .v-icon--size-default {
+    font-size: unset;
+  }
+  .mdi-checkbox-marked::before {
+    color: $selected-background-color;
+  }
+  .v-selection-control__input > .v-icon {
+    color: $ring-borders-color;
+    width: 10px;
+    height: 10px;
+  }
+  .mdi-checkbox-marked.v-icon {
+    background: $ring-text-color;
+  }
+  .v-label {
+    font-size: 14px;
+    color: $ring-text-color;
+  }
+  .v-selection-control__wrapper {
+    margin-right: 7px;
+  }
+  .v-btn--size-default {
+    --v-btn-height: 24px;
+  }
+  .v-btn {
+    text-transform: unset;
+    letter-spacing: unset;
+    font-size: 13px;
+    border-radius: 3px;
+  }
+  .v-text-field .v-input__details {
+    padding-inline-start: 0;
+  }
+}
+.v-field--active {
+  .v-field__outline {
+    &::before {
+      color: $primary;
+    }
+  }
+}
 a {
   color: $link;
   text-decoration: none;
@@ -5,6 +96,9 @@ a {
     color: $link-hover;
     text-decoration: underline;
   }
+}
+.ring-link {
+  color: $ring-link-color;
 }
 .v-application {
   color: $text;
@@ -70,4 +164,7 @@ a {
 }
 .v-selection-control__input {
   justify-content: unset;
+}
+.v-field__input {
+  padding: 0;
 }
