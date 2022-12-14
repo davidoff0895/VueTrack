@@ -6,11 +6,11 @@
   >
     <template #fields>
       <v-text-field
-        v-model="user.login"
-        :error-messages="validationErrors.login"
+        v-model="user.username"
+        :error-messages="validationErrors.username"
         placeholder="Username or Email"
         required
-        @input="$v.login.$touch"
+        @input="$v.username.$touch"
       />
       <v-text-field
         type="password"
@@ -43,14 +43,17 @@ import { required } from '@vuelidate/validators';
 import { useValidation } from '@/utils/validation';
 import { useRouter } from 'vue-router';
 import AuthForm from '@/components/auth/AuthForm.vue';
+import useUserModule from '@/store/user/module';
+
+const { logIn } = useUserModule();
 
 const rules = {
-  login: { required },
+  username: { required },
   password: { required },
 };
 
 const user = reactive({
-  login: null,
+  username: null,
   password: null,
   isRemember: false,
 });
@@ -63,6 +66,7 @@ const submit = async () => {
   if (!isValid) {
     return;
   }
-  router.push('/auth');
+  await logIn(user);
+  return router.back();
 };
 </script>

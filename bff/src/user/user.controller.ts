@@ -34,7 +34,7 @@ export class UserController {
   }
 
   @UseGuards(AuthenticatedGuard)
-  @Get('/protected')
+  @Get('/me')
   getHello(@Request() req): string {
     return req.user;
   }

@@ -13,4 +13,15 @@ module.exports = defineConfig({
       // custom config
     },
   },
+  devServer: {
+    proxy: {
+      '/bff': {
+        target: process.env.VUE_APP_BASE_URL,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/bff': '',
+        },
+      },
+    },
+  },
 });

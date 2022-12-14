@@ -8,5 +8,7 @@ export interface UserState {
 export interface UserModule {
   user: ComputedRef<User>
   isAuthorised: ComputedRef<boolean>
+  getUser(): Promise<User>
   setUser: (user: User) => void
+  logIn: (username: string, password: string) => void
 }
