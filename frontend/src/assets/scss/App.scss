@@ -1,7 +1,39 @@
 body {
+  .v-theme--light {
+    a {
+      color: $link-light;
+    }
+    .v-checkbox-btn {
+      .v-selection-control__input {
+        color: $ring-borders-color;
+      }
+    }
+    .ring-link {
+      color: $link-light;
+    }
+    .v-list-item__content {
+      color: $link-light;
+    }
+  }
+  .v-theme--dark {
+    a {
+      color: $link;
+    }
+    --v-theme-on-background: 187,187,187 !important;
+    --v-theme-on-surface: 187,187,187;
+    .v-list-item__content {
+      color: $link;
+    }
+  }
+  a {
+    text-decoration: none;
+    &:hover {
+      color: $link-hover;
+      text-decoration: underline;
+    }
+  }
   #app {
     input::placeholder {
-      color: $ring-text-color;
       font-size: 12px;
       opacity: .65;
     }
@@ -14,7 +46,6 @@ body {
   input[type=text], input[type=password] {
     font-size: 12px;
     padding: 0;
-    color: $ring-text-color;
     background: none;
     background-color: unset;
     &:hover {
@@ -52,8 +83,7 @@ body {
     color: $selected-background-color;
   }
   .v-selection-control__input > .v-icon {
-    color: $ring-borders-color;
-    width: 10px;
+    width: 14px;
     height: 10px;
   }
   .mdi-checkbox-marked.v-icon {
@@ -61,7 +91,6 @@ body {
   }
   .v-label {
     font-size: 14px;
-    //color: $ring-text-color;
   }
   .v-selection-control__wrapper {
     margin-right: 7px;
@@ -85,20 +114,6 @@ body {
       color: $primary;
     }
   }
-}
-a {
-  color: $link;
-  text-decoration: none;
-  &:hover {
-    color: $link-hover;
-    text-decoration: underline;
-  }
-}
-.ring-link {
-  color: $ring-link-color;
-}
-.v-application {
-  color: $text;
 }
 .v-app-bar.v-toolbar {
   height: 64px;
@@ -153,7 +168,6 @@ a {
   min-height: auto;
 }
 .v-list-item__content {
-  color: $link;
   cursor: pointer;
   &:hover {
     color: $link-hover;

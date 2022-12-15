@@ -48,12 +48,17 @@ const menu = mainMenu;
       &__text {
         padding: 8px;
         font-weight: bold;
-        color: #ffffff;
+        //color: #ffffff;
       }
     }
     &__routes {
       margin: auto 0;
       font-size: 14px;
+    }
+  }
+  .v-theme--dark {
+    .main-menu__logo__text {
+      color: #ffffff;
     }
   }
 </style>
