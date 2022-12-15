@@ -14,9 +14,20 @@
 <script setup lang="ts">
 import appMode from '@/utils/appMode';
 import { useTheme } from 'vuetify';
+import { onMounted } from 'vue';
+import useUserModule from '@/store/user/module';
+import { useRouter } from 'vue-router';
 
 const theme = useTheme();
-theme.global.name.value = appMode.LIGHT;
+const { isAuthorised } = useUserModule();
+const router = useRouter();
+
+onMounted(() => {
+  if (isAuthorised.value) {
+    return router.push('/');
+  }
+  theme.global.name.value = appMode.LIGHT;
+});
 </script>
 
 <style lang="scss" scoped>

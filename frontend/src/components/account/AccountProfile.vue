@@ -59,7 +59,7 @@
           </v-list>
         </v-menu>
       </v-list-item>
-      <v-list-item>
+      <v-list-item @click="logout">
         Log out
       </v-list-item>
     </v-list>
@@ -70,8 +70,11 @@
 import { ref, watch } from 'vue';
 import { useTheme } from 'vuetify';
 import appMode from '@/utils/appMode';
+import useUserModule from '@/store/user/module';
+import { redirectToLogin } from '@/router/redirectToLogin';
 
 const theme = useTheme();
+const { logOut } = useUserModule();
 
 const radioButtons = [
   { label: 'Light', value: appMode.LIGHT },
@@ -90,6 +93,11 @@ watch(appTheme, (newMode) => {
     appMode.userPcMode : newMode;
   appMode.setAppMode(newMode);
 }, { immediate: true });
+
+const logout = async () => {
+  await logOut();
+  return redirectToLogin();
+};
 </script>
 
 <style lang="scss">

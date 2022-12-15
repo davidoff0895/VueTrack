@@ -48,9 +48,6 @@ body {
       --v-medium-emphasis-opacity: 1;
     }
   }
-  .v-icon--size-default {
-    font-size: unset;
-  }
   .mdi-checkbox-marked::before {
     color: $selected-background-color;
   }
@@ -64,7 +61,7 @@ body {
   }
   .v-label {
     font-size: 14px;
-    color: $ring-text-color;
+    //color: $ring-text-color;
   }
   .v-selection-control__wrapper {
     margin-right: 7px;
@@ -108,6 +105,9 @@ a {
 }
 .v-app-bar.v-toolbar:not(.v-toolbar--flat) {
   box-shadow: none;
+}
+.fz-12 {
+  font-size: 12px;
 }
 .fz-13 {
   font-size: 13px;
@@ -167,4 +167,7 @@ a {
 }
 .v-field__input {
   padding: 0;
+}
+.error {
+  color: $label-error-color;
 }

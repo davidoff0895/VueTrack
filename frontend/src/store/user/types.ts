@@ -3,12 +3,14 @@ import { ComputedRef } from 'vue';
 
 export interface UserState {
   user: User
+  userError: any
 }
 
 export interface UserModule {
   user: ComputedRef<User>
+  userError: ComputedRef<any>
   isAuthorised: ComputedRef<boolean>
   getUser(): Promise<User>
-  setUser: (user: User) => void
-  logIn: (username: string, password: string) => void
+  logIn(user: {username: string, password: string}): Promise<void>
+  logOut(): Promise<void>
 }

@@ -14,6 +14,9 @@ export class UsersService implements UsersServiceInterface {
   logIn(user): Promise<User> {
     return this.provider.post('/login', user);
   }
+  logOut(): Promise<void> {
+    return this.provider.post('/logout');
+  }
   getUser(): Promise<User> {
     return this.provider.get('/me');
   }

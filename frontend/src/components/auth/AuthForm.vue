@@ -1,16 +1,24 @@
 <template>
-  <v-form class="auth-form">
-    <div class="text-black text-center auth-form__title mt-3 mb-7">
-      {{ title }}
+  <v-form
+    class="auth-form"
+    @submit.prevent="emit('submit')"
+  >
+    <div class="text-center mt-3 mb-6">
+      <div class="text-black auth-form__title">
+        {{ title }}
+      </div>
+      <div class="text-center fz-13 error mt-1">
+        {{ errorMessage }}
+      </div>
     </div>
     <slot name="fields" />
     <v-btn
+      type="submit"
       block
       class="mt-2"
       color="primary"
       :variant="btnStyle"
       :disabled="isDisabled"
-      @click="emit('submit')"
     >
       {{ btnText }}
     </v-btn>
@@ -19,10 +27,12 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { computed, onMounted } from 'vue';
 import { onBeforeRouteLeave, useRoute } from 'vue-router';
 import { global } from '@/consts/global';
+import useUserModule from '@/store/user/module';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const props = defineProps({
   title: { type: String, required: true },
   btnText: { type: String, required: true },
@@ -32,6 +42,9 @@ const props = defineProps({
 
 const route = useRoute();
 const emit = defineEmits(['submit']);
+const { userError } = useUserModule();
+
+const errorMessage = computed(() => userError.value?.message);
 
 onMounted(() => {
   (document as any).title = route.meta.title;

@@ -17,7 +17,7 @@
     </template>
     <template #links>
       <router-link
-        to="/auth/login"
+        :to="loginRouter"
         class="reset-form__link fz-14 ring-link d-block text-center mt-3"
       >
         Go back to login page
@@ -30,7 +30,7 @@
 import { computed, reactive } from 'vue';
 import { required, email } from '@vuelidate/validators';
 import { useValidation } from '@/utils/validation';
-import { useRouter } from 'vue-router';
+import { RouteLocation, useRouter } from 'vue-router';
 import AuthForm from '@/components/auth/AuthForm.vue';
 
 const rules = {
@@ -43,6 +43,10 @@ const user = reactive({
 
 const { $v, validationErrors } = useValidation(rules, user);
 const router = useRouter();
+const loginRouter: RouteLocation = {
+  path: '/auth/login',
+  query: router.currentRoute.value.query,
+};
 
 const btnStyle = computed(() => $v.value.$invalid ? 'outlined' : 'elevated');
 
