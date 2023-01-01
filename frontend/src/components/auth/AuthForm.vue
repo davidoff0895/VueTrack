@@ -3,6 +3,11 @@
     class="auth-form"
     @submit.prevent="emit('submit')"
   >
+    <v-img
+      :src="require('@/assets/svg/logo.svg')"
+      width="90"
+      class="ma-auto"
+    />
     <div class="text-center mt-3 mb-6">
       <div class="text-black auth-form__title">
         {{ title }}
@@ -47,7 +52,7 @@ const { userError } = useUserModule();
 const errorMessage = computed(() => userError.value?.message);
 
 onMounted(() => {
-  (document as any).title = route.meta.title;
+  (document as any).title = route.meta.title || global.DEFAULT_DOC_TITLE;
 });
 onBeforeRouteLeave(() => {
   (document as any).title = global.DEFAULT_DOC_TITLE;
@@ -58,6 +63,7 @@ onBeforeRouteLeave(() => {
 <style lang="scss" scoped>
 .auth-form {
   width: 280px;
+  margin: auto;
   &__title {
     font-size: 20px;
   }

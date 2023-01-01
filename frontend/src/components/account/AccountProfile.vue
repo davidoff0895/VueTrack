@@ -6,18 +6,24 @@
     <template #activator="{ props }">
       <img
         v-bind="props"
-        :src="require('@/assets/svg/profile.svg')"
+        :src="user.avatar"
         class="account-profile__img ml-5"
         alt="user"
       >
+      <DialogLoginForm
+        v-if="isLoginForm"
+        @close="toggleLogin"
+      />
     </template>
     <v-list class="account-profile__list">
-      <v-list-item>
+      <v-list-item class="account-profile__list__item">
         <router-link to="/user/me">
           Profile
         </router-link>
       </v-list-item>
-      <v-list-item>
+      <v-list-item
+        class="account-profile__list__item account-profile__list__dropdown"
+      >
         <v-menu
           open-on-hover
           location="start"
@@ -59,7 +65,16 @@
           </v-list>
         </v-menu>
       </v-list-item>
-      <v-list-item @click="logout">
+      <v-list-item
+        class="account-profile__list__item"
+        @click="toggleLogin"
+      >
+        Switch user
+      </v-list-item>
+      <v-list-item
+        class="account-profile__list__item"
+        @click="logout"
+      >
         Log out
       </v-list-item>
     </v-list>
@@ -72,6 +87,7 @@ import { useTheme } from 'vuetify';
 import appMode from '@/utils/appMode';
 import useUserModule from '@/store/user/module';
 import { redirectToLogin } from '@/router/redirectToLogin';
+import DialogLoginForm from '@/components/auth/DialogLoginForm.vue';
 
 const theme = useTheme();
 const { logOut } = useUserModule();
@@ -87,6 +103,8 @@ const routerParams = {
 };
 
 const appTheme = ref(appMode.mode);
+const isLoginForm = ref(false);
+const { user } = useUserModule();
 
 watch(appTheme, (newMode) => {
   theme.global.name.value = newMode === appMode.SYNC_OS ?
@@ -98,21 +116,43 @@ const logout = async () => {
   await logOut();
   return redirectToLogin();
 };
+const toggleLogin = () => {
+  isLoginForm.value = !isLoginForm.value;
+};
 </script>
 
 <style lang="scss">
+.account-profile.v-menu .v-list {
+  padding-left: 0;
+  padding-right: 0;
+}
 .account-profile {
   &__img {
     width: 32px;
   }
   &__list {
+    &__item {
+      &:hover {
+        .v-list-item__content {
+          color: $link-hover;
+        }
+      }
+    }
     &__icon {
       font-size: 16px;
-      left: -6px;
-      top: 6px;
+      left: 6px;
+      top: 8px;
     }
     &__sub {
       right: 40px;
+    }
+    &__dropdown {
+      &:hover {
+        background: $menu-hover;
+        .v-list-item__content {
+          color: $link;
+        }
+      }
     }
   }
 }

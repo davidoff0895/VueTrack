@@ -1,13 +1,6 @@
 <template>
   <div class="d-flex justify-center align-center h-100">
-    <div>
-      <v-img
-        :src="require('@/assets/svg/logo.svg')"
-        width="90"
-        class="ma-auto"
-      />
-      <router-view />
-    </div>
+    <router-view />
   </div>
 </template>
 
@@ -29,7 +22,3 @@ onMounted(() => {
   theme.global.name.value = appMode.LIGHT;
 });
 </script>
-
-<style lang="scss" scoped>
-
-</style>

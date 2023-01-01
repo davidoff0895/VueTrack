@@ -107,6 +107,10 @@ body {
   .v-text-field .v-input__details {
     padding-inline-start: 0;
   }
+  .v-overlay__scrim {
+    opacity: 40%;
+    background: #ffffff;
+  }
 }
 .v-field--active {
   .v-field__outline {
@@ -125,12 +129,21 @@ body {
   font-size: 12px;
 }
 .fz-13 {
-  font-size: 13px;
+  font-size: 13px !important;
 }
 .fz-14 {
   font-size: 14px;
 }
 .v-menu {
+  .v-list-item:hover > .v-list-item__overlay {
+    opacity: 0;
+  }
+  .v-list-item--density-default.v-list-item--one-line {
+    min-height: auto;
+    padding-inline-start: 25px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
   .v-list {
     padding: 11px 16px 16px;
     .list-title {
@@ -163,9 +176,6 @@ body {
 .v-list-item {
   padding: unset;
   font-size: 14px;
-}
-.v-list-item--density-default.v-list-item--one-line {
-  min-height: auto;
 }
 .v-list-item__content {
   cursor: pointer;

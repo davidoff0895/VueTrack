@@ -20,19 +20,7 @@
         required
         @input="$v.password.$touch"
       />
-      <div class="d-flex mt-3">
-        <v-checkbox
-          v-model="userForm.isRemember"
-          label="Remember me"
-          required
-        />
-        <router-link
-          :to="resetRouter"
-          class="auth-form__link fz-14 ring-link"
-        >
-          Reset password
-        </router-link>
-      </div>
+      <div class="d-flex mt-3" />
     </template>
   </AuthForm>
 </template>
@@ -41,7 +29,7 @@
 import { reactive } from 'vue';
 import { required } from '@vuelidate/validators';
 import { useValidation } from '@/utils/validation';
-import { RouteLocation, useRoute, useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import AuthForm from '@/components/auth/AuthForm.vue';
 import useUserModule from '@/store/user/module';
 
@@ -49,10 +37,6 @@ const { logIn, isAuthorised } = useUserModule();
 const router = useRouter();
 const route = useRoute();
 
-const resetRouter: RouteLocation = {
-  path: '/auth/restore',
-  query: route.query,
-};
 const rules = {
   username: { required },
   password: { required },
@@ -60,10 +44,16 @@ const rules = {
 const userForm = reactive({
   username: null,
   password: null,
-  isRemember: false,
 });
 const { $v, validationErrors } = useValidation(rules, userForm);
+const emit = defineEmits(['successfulLogin']);
 
+const redirect = () => {
+  const { redirectFrom }: any = route.query;
+  if (redirectFrom) {
+    router.push(redirectFrom);
+  }
+};
 const submit = async () => {
   const isValid = await $v.value.$validate();
   if (!isValid) {
@@ -71,8 +61,8 @@ const submit = async () => {
   }
   await logIn(userForm);
   if (isAuthorised.value) {
-    const { redirectFrom }: any = route.query;
-    return router.push(redirectFrom);
+    emit('successfulLogin');
+    return redirect();
   }
 };
 </script>
