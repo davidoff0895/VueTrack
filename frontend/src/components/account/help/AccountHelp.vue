@@ -62,24 +62,9 @@ const closeAbout = () => {
   &__icon {
     cursor: pointer;
     transition: color .3s ease-out;
-  }
-}
-.v-theme--light {
-  .account-help {
-    &__icon {
-      color: $ring-borders-color !important;
-      &:hover {
-        color: $border-hover-color !important;
-      }
-    }
-  }
-}
-.v-theme--dark {
-  .account-help {
-    &__icon {
-      &:hover {
-        color: $link !important;
-      }
+    color: var(--icon) !important;
+    &:hover {
+      color: var(--border-hover) !important;
     }
   }
 }

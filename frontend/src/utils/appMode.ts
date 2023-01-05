@@ -24,6 +24,7 @@ class AppMode {
     this.validateAppMode(mode);
     window.localStorage.setItem(this.APP_MODE_LS_KEY, mode);
     this.mode = mode;
+    this.setCssMode();
   }
 
   private validateAppMode(mode: string) {
@@ -32,6 +33,11 @@ class AppMode {
       throw new Error(`unexpected mode ${mode}.
         Allowed modes: ${allowedAppModes}`);
     }
+  }
+
+  private setCssMode() {
+    const attribute = this.mode === this.SYNC_OS ? this.userPcMode : this.mode;
+    document.documentElement.setAttribute('data-theme', attribute);
   }
 }
 

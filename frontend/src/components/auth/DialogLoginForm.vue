@@ -44,7 +44,10 @@ const closeDialog = () => emit('close');
     }
   }
   &__close.v-btn {
-    color: $link-hover;
+    color: transparent;
+    .v-btn__content {
+      color: $link-hover;
+    }
   }
 }
 </style>

@@ -1,31 +1,15 @@
 body {
-  .v-theme--light {
-    a {
-      color: $link-light;
-    }
-    .v-checkbox-btn {
-      .v-selection-control__input {
-        color: $ring-borders-color;
-      }
-    }
-    .ring-link {
-      color: $link-light;
-    }
-    .v-list-item__content {
-      color: $link-light;
+  .v-checkbox-btn {
+    .v-selection-control__input {
+      color: var(--border);
     }
   }
   .v-theme--dark {
-    a {
-      color: $link;
-    }
     --v-theme-on-background: 187,187,187 !important;
     --v-theme-on-surface: 187,187,187;
-    .v-list-item__content {
-      color: $link;
-    }
   }
   a {
+    color: var(--link);
     text-decoration: none;
     &:hover {
       color: $link-hover;
@@ -52,9 +36,19 @@ body {
       background: none;
     }
   }
+  .v-list-item__content {
+    color: var(--link);
+    cursor: pointer;
+    &:hover {
+      color: $link-hover;
+    }
+    .ring-link {
+      color: var(--link);
+    }
+  }
   .v-field__outline {
     --v-field-border-opacity: 1;
-    color: $ring-borders-color;
+    color: var(--border);
   }
   .v-input--density-default {
     --v-input-control-height: 24px;
@@ -176,12 +170,6 @@ body {
 .v-list-item {
   padding: unset;
   font-size: 14px;
-}
-.v-list-item__content {
-  cursor: pointer;
-  &:hover {
-    color: $link-hover;
-  }
 }
 .v-selection-control--density-default {
   --v-selection-control-size: 25px;

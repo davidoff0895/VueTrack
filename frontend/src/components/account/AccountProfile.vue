@@ -148,9 +148,9 @@ const toggleLogin = () => {
     }
     &__dropdown {
       &:hover {
-        background: $menu-hover;
+        background: var(--menu-hover);
         .v-list-item__content {
-          color: $link;
+          color: var(--link);
         }
       }
     }
