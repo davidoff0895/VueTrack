@@ -54,9 +54,11 @@ const errorMessage = computed(() => userError.value?.message);
 onMounted(() => {
   (document as any).title = route.meta.title || global.DEFAULT_DOC_TITLE;
 });
-onBeforeRouteLeave(() => {
-  (document as any).title = global.DEFAULT_DOC_TITLE;
-});
+if (route.name === 'auth') {
+  onBeforeRouteLeave(() => {
+    (document as any).title = global.DEFAULT_DOC_TITLE;
+  });
+}
 
 </script>
 

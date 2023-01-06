@@ -2,6 +2,7 @@
   <AuthForm
     title="Log in to VueTrack"
     btn-text="Log in"
+    class="login-form"
     @submit="submit"
   >
     <template #fields>
@@ -66,3 +67,11 @@ const submit = async () => {
   }
 };
 </script>
+
+<style lang="scss">
+.login-form {
+  .v-field__outline {
+    color: $light-border;
+  }
+}
+</style>

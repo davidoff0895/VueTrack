@@ -10,8 +10,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import AccountHelp from '@/components/account/help/AccountHelp.vue';
+import AccountSettings from '@/components/account/settings/AccountSettings.vue';
 import AccountProfile from '@/components/account/AccountProfile.vue';
 
-const menuItems = [AccountHelp, AccountProfile];
+const menuItems = [AccountSettings, AccountProfile];
 </script>

@@ -16,16 +16,9 @@ body {
       text-decoration: underline;
     }
   }
-  #app {
-    input::placeholder {
-      font-size: 12px;
-      opacity: .65;
-    }
-    .v-field__outline {
-      &::after {
-        content: none;
-      }
-    }
+  input::placeholder {
+    font-size: 12px;
+    opacity: .65;
   }
   input[type=text], input[type=password] {
     font-size: 12px;
@@ -49,6 +42,9 @@ body {
   .v-field__outline {
     --v-field-border-opacity: 1;
     color: var(--border);
+    &::after {
+      content: none !important;
+    }
   }
   .v-input--density-default {
     --v-input-control-height: 24px;
