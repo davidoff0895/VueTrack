@@ -20,4 +20,7 @@ export class UsersService implements UsersServiceInterface {
   getUser(): Promise<User> {
     return this.provider.get('/me');
   }
+  getUsers({ offset, limit }): Promise<User[]> {
+    return this.provider.get('/list', { offset, limit });
+  }
 }

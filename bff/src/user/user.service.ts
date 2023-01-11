@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Inject,
   Injectable,
@@ -7,11 +8,7 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from '@/user/entities/user.entity';
 import { Model } from 'mongoose';
-import {
-  CreateUserDto,
-  mapUserToDto,
-  UserDto,
-} from '@/user/dto/create-user.dto';
+import { CreateUserDto, UserDto } from '@/user/dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { PaginationDto } from '@/common/dto/pagination.dto';
 import userConfiguration from '@/user/config/user.config';
@@ -29,8 +26,12 @@ export class UserService {
   ) {
     this.AVATAR_URL = userConfig.avatarUrl;
   }
-  async getUsers({ offset, limit }: PaginationDto): Promise<User[]> {
-    return this.userModel.find().skip(offset).limit(limit).exec();
+  async getUsers({ offset, limit }: PaginationDto): Promise<UserDto[]> {
+    if (!(offset >= 0 && limit)) {
+      throw new BadRequestException(`Incorrect offset or limit parameter`);
+    }
+    const users = await this.userModel.find().skip(offset).limit(limit).exec();
+    return users.map(({ userInfo }) => userInfo);
   }
 
   async findOne(id: string): Promise<User> {
@@ -50,14 +51,14 @@ export class UserService {
       throw new ConflictException(UserErrors.LOGIN);
     }
     const user = new this.userModel({
-      login: createUserDto.login.toLowerCase(),
+      login: createUserDto.login,
       name: createUserDto.login,
       password: await UserService.getHashPassword(createUserDto.password),
       avatar: this.generateAvatar(createUserDto.login),
       requiredTwoFactorAuthentication: false,
     });
     const newUser = await user.save();
-    return mapUserToDto(newUser);
+    return newUser.userInfo;
   }
   async remove(id: string) {
     const user = await this.findOne(id);

@@ -11,6 +11,7 @@ export interface UserModule {
   userError: ComputedRef<any>
   isAuthorised: ComputedRef<boolean>
   getUser(): Promise<User>
+  getUsers(): Promise<User[]>
   logIn(user: {username: string, password: string}): Promise<void>
   logOut(): Promise<void>
 }

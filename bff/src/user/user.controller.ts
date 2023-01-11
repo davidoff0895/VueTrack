@@ -6,12 +6,10 @@ import {
   UsePipes,
   Request,
   Get,
+  Param,
+  Delete,
 } from '@nestjs/common';
-import {
-  CreateUserDto,
-  mapUserToDto,
-  UserDto,
-} from '@/user/dto/create-user.dto';
+import { CreateUserDto, UserDto } from '@/user/dto/create-user.dto';
 import { UserService } from '@/user/user.service';
 import { UserPipe } from '@/user/pipes/user.pipe';
 import { LocalAuthGuard } from '@/auth/local.auth.guard';
@@ -30,18 +28,31 @@ export class UserController {
   @UseGuards(LocalAuthGuard)
   @Post('/login')
   login(@Request() req): UserDto {
-    return mapUserToDto(req.user);
+    return req.user.userInfo;
   }
 
   @UseGuards(AuthenticatedGuard)
   @Get('/me')
-  getHello(@Request() req): string {
+  getMyUser(@Request() req): UserDto {
     return req.user;
   }
 
+  @UseGuards(AuthenticatedGuard)
+  @Get('/list')
+  getUsers(@Request() req) {
+    return this.userService.getUsers(req.query);
+  }
+
   @Post('/logout')
-  logout(@Request() req): any {
+  logout(@Request() req) {
     req.session.destroy();
     return { msg: 'The user session has ended' };
+  }
+
+  @UseGuards(AuthenticatedGuard)
+  @Delete(':id')
+  async remove(@Param('id') id: string) {
+    await this.userService.remove(id);
+    return { msg: `The user #${id} was removed successfully` };
   }
 }

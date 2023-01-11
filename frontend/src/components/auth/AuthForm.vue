@@ -32,9 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue';
-import { onBeforeRouteLeave, useRoute } from 'vue-router';
-import { global } from '@/consts/global';
+import { computed } from 'vue';
 import useUserModule from '@/store/user/module';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -45,20 +43,10 @@ const props = defineProps({
   isDisabled: { type: Boolean, default: () => false },
 });
 
-const route = useRoute();
 const emit = defineEmits(['submit']);
 const { userError } = useUserModule();
 
 const errorMessage = computed(() => userError.value?.message);
-
-onMounted(() => {
-  (document as any).title = route.meta.title || global.DEFAULT_DOC_TITLE;
-});
-if (route.name === 'auth') {
-  onBeforeRouteLeave(() => {
-    (document as any).title = global.DEFAULT_DOC_TITLE;
-  });
-}
 
 </script>
 

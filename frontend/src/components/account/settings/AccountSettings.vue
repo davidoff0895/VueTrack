@@ -42,7 +42,7 @@ const isActive = (isAriaExpanded) => {
     transition: all .3s ease-out;
     color: var(--icon);
     &:hover {
-      color: var(--border-hover) !important;
+      color: var(--border-hover);
     }
   }
   &__icon.active {

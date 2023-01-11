@@ -23,6 +23,9 @@ export default function useUserModule(): UserModule {
       setUser(user);
       return user;
   };
+  const getUsers = () => {
+      return new UsersService().getUsers({ offset: 0, limit: 50 });
+  };
 
   const setUser = (user: User) => state.user = user;
 
@@ -31,6 +34,7 @@ export default function useUserModule(): UserModule {
     isAuthorised: computed(() => !!state.user),
     userError: computed(() => state.userError),
     getUser,
+    getUsers,
     logIn,
     logOut,
   };
