@@ -1,7 +1,6 @@
 import {
   BadRequestException,
   ConflictException,
-  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -11,21 +10,14 @@ import { Model } from 'mongoose';
 import { CreateUserDto, UserDto } from '@/user/dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { PaginationDto } from '@/common/dto/pagination.dto';
-import userConfiguration from '@/user/config/user.config';
-import { ConfigType } from '@nestjs/config';
 import { UserErrors } from '@/user/const/userStatuses';
 
 @Injectable()
 export class UserService {
-  public readonly AVATAR_URL: string;
   constructor(
     @InjectModel(User.name)
     private readonly userModel: Model<User>,
-    @Inject(userConfiguration.KEY)
-    private userConfig: ConfigType<typeof userConfiguration>,
-  ) {
-    this.AVATAR_URL = userConfig.avatarUrl;
-  }
+  ) {}
   async getUsers({ offset, limit }: PaginationDto): Promise<UserDto[]> {
     if (!(offset >= 0 && limit)) {
       throw new BadRequestException(`Incorrect offset or limit parameter`);
@@ -54,7 +46,7 @@ export class UserService {
       login: createUserDto.login,
       name: createUserDto.login,
       password: await UserService.getHashPassword(createUserDto.password),
-      avatar: this.generateAvatar(createUserDto.login),
+      avatar: createUserDto.login,
       requiredTwoFactorAuthentication: false,
     });
     const newUser = await user.save();
@@ -68,9 +60,5 @@ export class UserService {
   private static async getHashPassword(password: string): Promise<string> {
     const saltOrRounds = 10;
     return bcrypt.hash(password, saltOrRounds);
-  }
-
-  private generateAvatar(userName: string): string {
-    return `${this.AVATAR_URL}?username=${userName}`;
   }
 }

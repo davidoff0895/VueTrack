@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { UserDto } from '@/user/dto/create-user.dto';
+import { avatarUrl } from '@/user/const/userConfig';
 
 @Schema({
   timestamps: true,
@@ -28,7 +29,11 @@ export class User extends Document {
   login: string;
   @Prop()
   password: string;
-  @Prop()
+  @Prop({
+    type: String,
+    lowercase: true,
+    get: (v) => `${avatarUrl}${v}`,
+  })
   avatar: string;
   @Prop()
   requiredTwoFactorAuthentication: boolean;
