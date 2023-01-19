@@ -1,6 +1,5 @@
 import {
   BadRequestException,
-  ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -10,7 +9,6 @@ import { Model } from 'mongoose';
 import { CreateUserDto, UserDto } from '@/user/dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { PaginationDto } from '@/common/dto/pagination.dto';
-import { UserErrors } from '@/user/const/userStatuses';
 
 @Injectable()
 export class UserService {
@@ -26,8 +24,8 @@ export class UserService {
     return users.map(({ userInfo }) => userInfo);
   }
 
-  async findOne(id: string): Promise<User> {
-    const user = await this.userModel.findOne({ _id: id }).exec();
+  async findById(id: string): Promise<User> {
+    const user = await this.userModel.findById(id).exec();
     if (!user) {
       throw new NotFoundException(`User #${id} not found`);
     }
@@ -37,11 +35,7 @@ export class UserService {
     login = login.toLowerCase();
     return this.userModel.findOne({ login });
   }
-  async create(createUserDto: CreateUserDto): Promise<UserDto> {
-    const existedUser = await this.getUser(createUserDto.login);
-    if (existedUser) {
-      throw new ConflictException(UserErrors.LOGIN);
-    }
+  async create(createUserDto: CreateUserDto): Promise<UserDto | string> {
     const user = new this.userModel({
       login: createUserDto.login,
       name: createUserDto.login,
@@ -53,7 +47,7 @@ export class UserService {
     return newUser.userInfo;
   }
   async remove(id: string) {
-    const user = await this.findOne(id);
+    const user = await this.findById(id);
     return user.remove();
   }
 

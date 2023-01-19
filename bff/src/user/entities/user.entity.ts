@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { UserDto } from '@/user/dto/create-user.dto';
 import { avatarUrl } from '@/user/const/userConfig';
+import { UserErrorHandler } from '@/user/errors/errorHandler';
 
 @Schema({
   timestamps: true,
@@ -25,14 +26,18 @@ export class User extends Document {
   @Prop({
     type: String,
     lowercase: true,
+    unique: true,
   })
   login: string;
-  @Prop()
+  @Prop({
+    type: String,
+    required: true,
+  })
   password: string;
   @Prop({
     type: String,
     lowercase: true,
-    get: (v) => `${avatarUrl}${v}`,
+    set: (v) => `${avatarUrl}${v}`,
   })
   avatar: string;
   @Prop()
@@ -41,3 +46,10 @@ export class User extends Document {
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+UserSchema.post('save', (error, doc, next) => {
+  if (error) {
+    new UserErrorHandler(error);
+  } else {
+    next();
+  }
+});
