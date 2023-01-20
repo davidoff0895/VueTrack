@@ -1,5 +1,4 @@
 $text: 187,187,187;
-$secondary: #80929d;
 $dark: #111314;
 $line: #475159;
 $primary: #008eff;
@@ -10,6 +9,8 @@ $link-hover: #ff008c;
 $light-border: #b8d1e5;
 
 :root {
+  --ring-content-background-color: #ffffff;
+  --ring-secondary-color: #737577;
   --menu-hover: #d4edff;
   --link: #0f5b99;
   --icon: var(--border);
@@ -17,6 +18,9 @@ $light-border: #b8d1e5;
   --border-hover: #80c6ff;
 }
 [data-theme="dark"] {
+  --ring-content-background-color: #23272b;
+  --ring-secondary-color: #80929d;
+  --ring-main-hover-color: #007ee5;
   --menu-hover: #062640;
   --link: #70b1e6;
   --icon: #80929d;
