@@ -19,8 +19,12 @@ $light-border: #b8d1e5;
 }
 [data-theme="dark"] {
   --ring-content-background-color: #23272b;
+  --ring-sidebar-background-color: #28343d;
+  --ring-hover-background-color: #0b1a26;
+  --ring-selected-background-color: #062640;
   --ring-secondary-color: #80929d;
   --ring-main-hover-color: #007ee5;
+  --ring-text-color: #bbb;
   --menu-hover: #062640;
   --link: #70b1e6;
   --icon: #80929d;

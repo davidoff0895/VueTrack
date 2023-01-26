@@ -1,6 +1,5 @@
 import '@mdi/font/css/materialdesignicons.css';
 import 'vuetify/styles';
-
 import { createVuetify } from 'vuetify';
 
 export default createVuetify({
@@ -13,6 +12,10 @@ export default createVuetify({
           background: '#23272b',
           secondary: '#80929d',
           surface: '#111314',
+          'table-background': '#ffffff',
+        },
+        variables: {
+          'table-background': '#ffffff',
         },
       },
       light: {

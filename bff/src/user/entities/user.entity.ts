@@ -15,6 +15,7 @@ import { UserErrorHandler } from '@/user/errors/errorHandler';
           login: this.login,
           avatar: this.avatar,
           requiredTwoFactorAuthentication: this.requiredTwoFactorAuthentication,
+          createdAt: this.createdAt,
         };
       },
     },
