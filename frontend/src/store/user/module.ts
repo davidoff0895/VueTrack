@@ -1,7 +1,7 @@
 import { UserModule } from '@/store/user/types';
 import { state } from '@/store/user/state';
 import { computed } from 'vue';
-import { User } from '@/types/user/user';
+import { CreateUser, User } from '@/types/user/user';
 import { UsersService } from '@/services/users';
 
 export default function useUserModule(): UserModule {
@@ -23,19 +23,31 @@ export default function useUserModule(): UserModule {
       setUser(user);
       return user;
   };
-  const getUsers = () => {
-      return new UsersService().getUsers({ offset: 0, limit: 50 });
+  const createUser = (newUser: CreateUser) => {
+      return new UsersService().createUser(newUser);
+  };
+  const deleteUser = (id: string, user: User) => {
+      return new UsersService().deleteUser(id, user);
+  };
+  const getUsers = async () => {
+    state.users = await new UsersService().getUsers({
+      offset: 0, limit: 50,
+    });
+    return state.users;
   };
 
   const setUser = (user: User) => state.user = user;
 
   return {
     user: computed(() => state.user),
+    users: computed(() => state.users),
     isAuthorised: computed(() => !!state.user),
     userError: computed(() => state.userError),
     getUser,
     getUsers,
     logIn,
     logOut,
+    createUser,
+    deleteUser,
   };
 }

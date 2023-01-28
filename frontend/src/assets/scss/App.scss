@@ -7,6 +7,8 @@ body {
   .v-theme--dark {
     --v-theme-on-background: 187,187,187 !important;
     --v-theme-on-surface: 187,187,187;
+    --v-theme-error: 219,88,96;
+    --v-disabled-opacity: 1;
   }
   a {
     color: var(--link);
@@ -22,7 +24,6 @@ body {
   }
   input[type=text], input[type=password] {
     font-size: 12px;
-    padding: 0;
     background: none;
     background-color: unset;
     &:hover {
@@ -159,9 +160,6 @@ body {
   justify-content: unset;
 }
 .v-field {
-  &__input {
-    padding: 0;
-  }
   &__outline {
     --v-field-border-opacity: 1;
     color: var(--border);
@@ -208,6 +206,8 @@ body {
   &--variant-filled &__overlay {
     background-color: transparent;
   }
+  --v-field-padding-start: 4px;
+  --v-field-padding-end: 4px;
 }
 .v-field--variant-outlined.v-field--focused .v-field__outline {
   --v-field-border-width: 1px;
@@ -219,6 +219,9 @@ body {
 .v-input--density-default {
   --v-input-control-height: 24px;
   --v-input-padding-top: 0;
+}
+.v-input--density-default .v-field--variant-outlined, .v-input--density-default .v-field--single-line, .v-input--density-default .v-field--no-label {
+  --v-field-padding-bottom: 0px;
 }
 .v-btn {
   text-transform: unset;
@@ -233,6 +236,11 @@ body {
     border-color: var(--border);
     &:hover {
       border-color: var(--border-hover);
+    }
+  }
+  &--variant-outlined.text-error {
+    &:hover {
+      border-color: $label-error-color;
     }
   }
   &--elevated {
@@ -278,4 +286,15 @@ body {
         }
       }
     }
+}
+.v-dialog {
+  .v-card--variant-elevated {
+    background: var(--ring-content-background-color);
+  }
+}
+.v-card--variant-elevated {
+  color: var(--ring-text-color);
+}
+.v-autocomplete .v-field .v-field__input > input {
+  padding: 3px 3px 3px 15px;
 }

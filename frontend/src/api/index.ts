@@ -15,4 +15,8 @@ export class Api {
     const { data } = await this.axiosInstance.post(url, params);
     return data;
   }
+  async delete<T = any>(url: string, params?: any): Promise<T> {
+    const { data } = await this.axiosInstance.delete(url, params);
+    return data;
+  }
 }

@@ -3,6 +3,11 @@ export interface User {
   name: string;
   login: string;
   avatar: string;
-  createdAt: string;
+  createdAt: Date;
   requiredTwoFactorAuthentication: boolean;
+}
+export interface CreateUser {
+  username: string
+  password: string
+  rePassword: string
 }

@@ -35,8 +35,7 @@
 import { computed } from 'vue';
 import useUserModule from '@/store/user/module';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const props = defineProps({
+defineProps({
   title: { type: String, required: true },
   btnText: { type: String, required: true },
   btnStyle: { type: String, default: () => 'elevated' },

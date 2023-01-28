@@ -9,7 +9,7 @@
       <v-text-field
         v-model="userForm.username"
         :error-messages="validationErrors.username"
-        placeholder="Username or Email"
+        placeholder="Username"
         required
         @input="$v.username.$touch"
       />

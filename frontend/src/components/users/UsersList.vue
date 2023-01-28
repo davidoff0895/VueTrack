@@ -9,6 +9,7 @@
       prepend-inner-icon="mdi-magnify"
       type="text"
     />
+
     <h2 class="mt-3">
       {{ accounts.length }} Users
       <v-icon
@@ -37,12 +38,34 @@
         attributes.
       </v-card-text>
     </v-card>
+
     <div class="mt-7 d-flex justify-space-between">
-      <v-btn
-        color="primary"
-      >
-        New user...
-      </v-btn>
+      <div>
+        <v-btn
+          color="primary"
+          @click="isNewUser = true"
+        >
+          New user...
+        </v-btn>
+        <NewUserDialog
+          v-if="isNewUser"
+          @close="closeNewUser"
+        />
+        <v-btn
+          v-if="selectedUsers.length"
+          variant="outlined"
+          color="error"
+          class="ml-2"
+          @click="isDeleteUser = true"
+        >
+          Delete
+        </v-btn>
+        <DeleteUserDialog
+          v-if="isDeleteUser"
+          :selected-users="selectedUsers"
+          @close="closeDeleteDialog"
+        />
+      </div>
       <v-btn
         variant="outlined"
       >
@@ -50,6 +73,7 @@
         Details
       </v-btn>
     </div>
+
     <v-table
       class="mt-5 users-table"
       table-background="#fff"
@@ -125,30 +149,34 @@
 import useUserModule from '@/store/user/module';
 import { computed, onMounted, Ref, ref, watch } from 'vue';
 import { MMMDyyyy } from '@/utils/dateFormat.js';
-import { UserTable } from '@/types/user/usersTable';
+import NewUserDialog from '@/components/users/NewUserDialog.vue';
+import { User } from '@/types/user/user';
+import DeleteUserDialog from '@/components/users/DeleteUserDialog.vue';
+
+interface UserTable extends User{
+  isChecked: boolean
+  registrationDate: string
+  profileLink: string,
+}
 
 const DECREACE = 'down';
 const INCREACE = 'up';
 
-const { getUsers } = useUserModule();
+const { getUsers, users } = useUserModule();
 const searchText = ref('');
 const accounts: Ref<UserTable[]> = ref([]);
 const isSelectedAll = ref(false);
 const isUserInfo = ref(false);
-const selectedUser: ref<UserTable> = ref({});
+const isNewUser = ref(false);
+const isDeleteUser = ref(false);
+const selectedUser: Ref<UserTable> = ref(null);
 const activeSort = ref({});
 
-onMounted(async () => {
-  const users = await getUsers();
-  accounts.value = users.map((user) => ({
-    ...user,
-    isChecked: false,
-    registrationDate: MMMDyyyy(user.createdAt),
-    profileLink: `/users/${user.id}`,
-  }));
+onMounted(() => {
+  fetchUsers();
 });
 
-const validateAllCheck = watch(accounts, () => {
+watch(accounts, () => {
   const notCheckedUser = accounts.value.find(({ isChecked }) => !isChecked);
   isSelectedAll.value = !notCheckedUser;
 }, { deep: true });
@@ -156,12 +184,32 @@ const validateAllCheck = watch(accounts, () => {
 const activeIconColor = computed(() =>
   isUserInfo.value ? 'secondary' : 'primary',
 );
+const selectedUsers = computed(() => {
+  const checkedUsers = accounts.value.filter(({ isChecked }) => isChecked);
+  if (checkedUsers.length) {
+    return checkedUsers;
+  }
+  if (selectedUser.value) {
+    return [selectedUser];
+  }
+  return [];
+});
 
 const selectUser = (user: UserTable) => {
   selectedUser.value = user;
 };
-const isSelectedUser = (userId: string) => userId === selectedUser.value.id;
+const isSelectedUser = (userId: string) => userId === selectedUser.value?.id;
 
+const fetchUsers = async () => {
+  await getUsers();
+  accounts.value = users.value.map((user) => fillUserInfo(user));
+};
+const fillUserInfo = (user: User): UserTable => ({
+  ...user,
+  isChecked: false,
+  registrationDate: MMMDyyyy(user.createdAt),
+  profileLink: `/users/${user.id}`,
+});
 const toggleUserInfo = () => isUserInfo.value = !isUserInfo.value;
 const sortBy = (key: string) => {
   activeSort.value = activeSort.value[key] === INCREACE
@@ -178,6 +226,14 @@ const checkAll = () => {
   accounts.value.forEach((user, i) => {
     accounts.value[i].isChecked = !isSelectedAll.value;
   });
+};
+const closeNewUser = (user) => {
+  accounts.value.push(fillUserInfo(user));
+  isNewUser.value = false;
+};
+const closeDeleteDialog = async () => {
+  await fetchUsers();
+  isDeleteUser.value = false;
 };
 </script>
 

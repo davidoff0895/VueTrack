@@ -23,4 +23,10 @@ export class UsersService implements UsersServiceInterface {
   getUsers({ offset, limit }): Promise<User[]> {
     return this.provider.get('/list', { offset, limit });
   }
+  createUser(user): Promise<User> {
+    return this.provider.post('/new', user);
+  }
+  deleteUser(id, user): Promise<string> {
+    return this.provider.post(`/${id}`, user);
+  }
 }
