@@ -116,3 +116,11 @@ body {
 .v-card--variant-elevated {
   color: var(--ring-text-color);
 }
+.v-autocomplete__content {
+  .v-list--one-line {
+    max-width: 250px;
+  }
+}
+.v-autocomplete__content.v-overlay__content {
+  box-shadow: none;
+}

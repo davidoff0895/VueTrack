@@ -5,6 +5,7 @@
     :items="filteredUsers"
     @input="inputUser"
     @click="clear"
+    class="users-filter"
     variant="outlined"
     placeholder="Filter users"
     prepend-inner-icon="mdi-magnify"
@@ -15,6 +16,7 @@
     clearable
     no-filter
     return-object
+    menu
   >
     <template #item="data">
       <v-list-item
@@ -56,6 +58,3 @@ const filterUsers = (query) => {
 };
 </script>
 
-<style lang="scss" scoped>
-
-</style>
