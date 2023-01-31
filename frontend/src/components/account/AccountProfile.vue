@@ -50,13 +50,6 @@
                 :value="value"
               />
             </v-radio-group>
-            <div class="menu-list-footer pt-3 fz-13 text-center">
-              <router-link :to="routerParams">
-                <div class="mt-4">
-                  More settings...
-                </div>
-              </router-link>
-            </div>
           </v-list>
         </v-menu>
       </v-list-item>
@@ -92,10 +85,6 @@ const radioButtons = [
   { label: 'Dark', value: appMode.DARK },
   { label: 'Sync with OS', value: appMode.SYNC_OS },
 ];
-const routerParams = {
-  path: '/user/me',
-  query: { tab: 'workspace' },
-};
 
 const appTheme = ref(appMode.mode);
 const isLoginForm = ref(false);
