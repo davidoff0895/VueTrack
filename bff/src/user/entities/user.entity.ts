@@ -11,9 +11,8 @@ import { UserErrorHandler } from '@/user/errors/errorHandler';
       get() {
         return {
           id: this._id,
-          name: this.name,
           login: this.login,
-          avatar: this.avatar,
+          avatar: `${avatarUrl}${this.login}`,
           requiredTwoFactorAuthentication: this.requiredTwoFactorAuthentication,
           createdAt: this.createdAt,
         };
@@ -22,8 +21,6 @@ import { UserErrorHandler } from '@/user/errors/errorHandler';
   },
 })
 export class User extends Document {
-  @Prop()
-  name: string;
   @Prop({
     type: String,
     lowercase: true,
@@ -35,12 +32,6 @@ export class User extends Document {
     required: true,
   })
   password: string;
-  @Prop({
-    type: String,
-    lowercase: true,
-    set: (v) => `${avatarUrl}${v}`,
-  })
-  avatar: string;
   @Prop()
   requiredTwoFactorAuthentication: boolean;
   userInfo: UserDto;

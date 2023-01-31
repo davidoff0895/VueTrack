@@ -45,7 +45,7 @@ body {
       --v-medium-emphasis-opacity: 1;
     }
   }
-  .mdi-checkbox-marked::before, .mdi-checkbox-blank-outline::before {
+  .mdi-checkbox-marked::before {
     color: var(--border-hover);
   }
   .mdi-checkbox-marked.v-icon {

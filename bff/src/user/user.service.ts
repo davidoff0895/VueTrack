@@ -38,9 +38,7 @@ export class UserService {
   async create(createUserDto: CreateUserDto): Promise<UserDto | string> {
     const user = new this.userModel({
       login: createUserDto.login,
-      name: createUserDto.login,
       password: await UserService.getHashPassword(createUserDto.password),
-      avatar: createUserDto.login,
       requiredTwoFactorAuthentication: false,
     });
     const newUser = await user.save();

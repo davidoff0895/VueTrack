@@ -115,9 +115,7 @@
               width="20"
               class="mr-2"
             >
-            <router-link :to="account.profileLink">
-              {{ account.login }}
-            </router-link>
+            {{ account.login }}
           </td>
           <td>{{ account.registrationDate }}</td>
         </tr>

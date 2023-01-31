@@ -12,7 +12,14 @@
           New user
         </v-card-title>
         <v-form @submit.prevent="submit">
-          <v-card-text class="mt-8">
+          <v-card-text>
+            <v-row>
+              <v-col
+                class="text-center error"
+              >
+                {{ error }}
+              </v-col>
+            </v-row>
             <v-row>
               <v-col cols="5">
                 <div class="fz-13">
@@ -100,6 +107,7 @@ const userForm = reactive({
   password: null,
   passwordRepeat: null,
 });
+const error = ref(null);
 
 const rules = {
   login: { required },
@@ -115,12 +123,17 @@ const isOpenedDialog = ref(true);
 const { $v, validationErrors } = useValidation(rules, userForm);
 
 const submit = async () => {
+  error.value = null;
   $v.value.$touch();
   if ($v.value.$invalid) {
     return;
   }
-  const createdUser = await createUser(userForm);
-  emit('close', createdUser);
+  try {
+    const createdUser = await createUser(userForm);
+    emit('close', createdUser);
+  } catch ({ response }) {
+    error.value = response?.data?.message;
+  }
 };
 </script>
 

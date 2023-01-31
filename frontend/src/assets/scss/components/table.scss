@@ -11,9 +11,11 @@
         }
         > tr > th {
           height: 30px;
+          font-size: 12px;
         }
       }
       > tbody {
+        font-size: 14px;
         > tr:not(:last-child) td {
           border-bottom: none;
         }

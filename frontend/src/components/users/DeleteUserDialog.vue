@@ -14,7 +14,7 @@
         <v-form @submit.prevent="submit">
           <v-card-text class="mt-8">
             <div>
-              When you confirm this action, the user account for test is
+              When you confirm this action, the user account is
               deleted. The replacement user inherits references to deleted
               users that cannot be empty, like visibility settings and
               ownership assignments. Other references are set to "Deleted
