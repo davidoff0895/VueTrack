@@ -1,16 +1,20 @@
 $text: 187,187,187;
 $dark: #111314;
-$line: #475159;
 $primary: #008eff;
 $ring-text-color: #1f2326;
-$selected-background-color: #d4edff;
 $label-error-color: #c22731;
 $link-hover: #ff008c;
 $light-border: #b8d1e5;
 
 :root {
   --ring-content-background-color: #ffffff;
+  --ring-sidebar-background-color: #f7f9fa;
+  --ring-hover-background-color: #ebf6ff;
   --ring-secondary-color: #737577;
+  --ring-selected-background-color: #d4edff;
+  --ring-line-color: #dfe5eb;
+  --ring-popup-border-components: 0, 42, 76;
+  --ring-popup-shadow-color: rgba(var(--ring-popup-border-components), 0.15);
   --menu-hover: #d4edff;
   --link: #0f5b99;
   --icon: var(--border);
@@ -25,6 +29,9 @@ $light-border: #b8d1e5;
   --ring-secondary-color: #80929d;
   --ring-main-hover-color: #007ee5;
   --ring-text-color: #bbb;
+  --ring-line-color: #475159;
+  --ring-popup-border-components: 0, 42, 76;
+  --ring-popup-shadow-color: rgba(var(--ring-popup-border-components), 0.15);
   --menu-hover: #062640;
   --link: #70b1e6;
   --icon: #80929d;

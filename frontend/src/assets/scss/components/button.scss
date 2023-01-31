@@ -1,0 +1,36 @@
+.v-btn {
+  text-transform: unset;
+  letter-spacing: unset;
+  font-size: 13px;
+  border-radius: 3px;
+  &--size-default {
+    --v-btn-height: 24px;
+  }
+  &--variant-outlined {
+    transition: border-color .3s ease;
+    border-color: var(--border);
+    &:hover {
+      border-color: var(--border-hover);
+    }
+  }
+  &--variant-outlined.text-error {
+    &:hover {
+      border-color: $label-error-color;
+    }
+  }
+  &--elevated {
+    &:focus {
+      box-shadow: unset;
+    }
+  }
+  &:hover {
+    > .v-btn__overlay {
+      opacity: 0;
+    }
+  }
+}
+.v-btn.bg-primary {
+  &:hover {
+    background-color: #007ee5 !important;
+  }
+}

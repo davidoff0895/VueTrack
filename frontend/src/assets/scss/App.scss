@@ -1,3 +1,9 @@
+@import "src/assets/scss/components/table";
+@import "src/assets/scss/components/button";
+@import "src/assets/scss/components/input";
+@import "src/assets/scss/components/menu";
+@import "src/assets/scss/components/avatar";
+
 body {
   .v-checkbox-btn {
     .v-selection-control__input {
@@ -18,18 +24,6 @@ body {
       text-decoration: underline;
     }
   }
-  input::placeholder {
-    font-size: 12px;
-    opacity: .65;
-  }
-  input[type=text], input[type=password] {
-    font-size: 12px;
-    background: none;
-    background-color: unset;
-    &:hover {
-      background: none;
-    }
-  }
   .v-list-item__content {
     color: var(--link);
     cursor: pointer;
@@ -39,12 +33,6 @@ body {
     .ring-link {
       color: var(--link);
     }
-  }
-  .v-input--density-default .v-field--variant-solo, .v-input--density-default .v-field--variant-filled {
-    --v-input-control-height: 24px;
-  }
-  .v-field--variant-filled.v-field--focused .v-field__overlay {
-    opacity: 0;
   }
   .v-selection-control--density-default {
     --v-selection-control-size: 14px;
@@ -57,12 +45,8 @@ body {
       --v-medium-emphasis-opacity: 1;
     }
   }
-  .mdi-checkbox-marked::before {
-    color: $selected-background-color;
-  }
-  .v-selection-control__input > .v-icon {
-    width: 14px;
-    height: 10px;
+  .mdi-checkbox-marked::before, .mdi-checkbox-blank-outline::before {
+    color: var(--border-hover);
   }
   .mdi-checkbox-marked.v-icon {
     background: $ring-text-color;
@@ -72,9 +56,6 @@ body {
   }
   .v-selection-control__wrapper {
     margin-right: 7px;
-  }
-  .v-text-field .v-input__details {
-    padding-inline-start: 0;
   }
   .v-overlay__scrim {
     opacity: 40%;
@@ -110,39 +91,6 @@ body {
 .cursor-pointer {
   cursor: pointer;
 }
-.v-menu {
-  .v-list-item:hover > .v-list-item__overlay {
-    opacity: 0;
-  }
-  .v-list-item--density-default.v-list-item--one-line {
-    min-height: auto;
-    padding-inline-start: 25px;
-    padding-top: 6px;
-    padding-bottom: 6px;
-  }
-  .v-list {
-    padding: 11px 16px 16px;
-    .list-title {
-      color: var(--ring-secondary-color);
-      letter-spacing: 1.5px;
-      font-size: 12px;
-    }
-    .menu-list-footer {
-      color: var(--ring-secondary-color);
-      &::before {
-        position: absolute;
-        left: 0;
-        content: '';
-        width: 100%;
-        height: 1px;
-        background: $line;
-      }
-    }
-    .v-input__details {
-      display: none;
-    }
-  }
-}
 .v-radio {
   .v-label {
     font-size: 13px;
@@ -156,145 +104,15 @@ body {
 .v-selection-control--density-default {
   --v-selection-control-size: 25px;
 }
-.v-selection-control__input {
-  justify-content: unset;
-}
-.v-field {
-  &__outline {
-    --v-field-border-opacity: 1;
-    color: var(--border);
-    &::after {
-      content: none !important;
-    }
-    &__start, &__end {
-      border-radius: unset !important;
-    }
-  }
-  &__prepend-inner {
-    color: var(--ring-secondary-color);
-    font-size: 12px;
-    align-items: center;
-  }
-  &__clearable {
-    align-items: center;
-    i {
-      transition: background-color .3s ease;
-      background-color: var(--ring-secondary-color);
-      color: var(--ring-content-background-color);
-      width: 10px;
-      height: 10px;
-    }
-    &:hover {
-      i {
-        background-color: $link-hover;
-      }
-    }
-  }
-  &--prepended {
-    padding-inline-start: 4px;
-  }
-  &--appended {
-    padding-inline-end: 4px;
-  }
-  &--active {
-    .v-field__outline {
-      &::before {
-        color: $primary;
-      }
-    }
-  }
-  &--variant-filled &__overlay {
-    background-color: transparent;
-  }
-  --v-field-padding-start: 4px;
-  --v-field-padding-end: 4px;
-}
-.v-field--variant-outlined.v-field--focused .v-field__outline {
-  --v-field-border-width: 1px;
-  color: $primary;
-}
 .error {
   color: $label-error-color;
-}
-.v-input--density-default {
-  --v-input-control-height: 24px;
-  --v-input-padding-top: 0;
-}
-.v-input--density-default .v-field--variant-outlined, .v-input--density-default .v-field--single-line, .v-input--density-default .v-field--no-label {
-  --v-field-padding-bottom: 0px;
-}
-.v-btn {
-  text-transform: unset;
-  letter-spacing: unset;
-  font-size: 13px;
-  border-radius: 3px;
-  &--size-default {
-    --v-btn-height: 24px;
-  }
-  &--variant-outlined {
-    transition: border-color .3s ease;
-    border-color: var(--border);
-    &:hover {
-      border-color: var(--border-hover);
-    }
-  }
-  &--variant-outlined.text-error {
-    &:hover {
-      border-color: $label-error-color;
-    }
-  }
-  &--elevated {
-    &:focus {
-      box-shadow: unset;
-    }
-  }
-  &:hover {
-    > .v-btn__overlay {
-      opacity: 0;
-    }
-  }
-}
-.v-btn.bg-primary {
-  &:hover {
-    background-color: #007ee5 !important;
-  }
-}
-.v-table {
-  background: transparent;
-    .v-table__wrapper {
-      > table {
-        line-height: 0;
-        > thead {
-          > tr:last-child th {
-            color: var(--ring-secondary-color);
-            border-bottom: .1px solid var(--ring-secondary-color);
-          }
-          > tr > th {
-            height: 30px;
-          }
-        }
-        > tbody {
-          > tr:not(:last-child) td {
-            border-bottom: none;
-          }
-          > tr:hover, tr.active {
-            background: var(--ring-hover-background-color);
-          }
-          > tr > td {
-            height: 30px;
-          }
-        }
-      }
-    }
 }
 .v-dialog {
   .v-card--variant-elevated {
     background: var(--ring-content-background-color);
+    box-shadow: 0 2px 16px var(--ring-popup-shadow-color);
   }
 }
 .v-card--variant-elevated {
   color: var(--ring-text-color);
-}
-.v-autocomplete .v-field .v-field__input > input {
-  padding: 3px 3px 3px 15px;
 }

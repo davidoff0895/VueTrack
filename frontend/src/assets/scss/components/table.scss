@@ -1,0 +1,29 @@
+.v-table {
+  background: transparent;
+  .v-table__wrapper {
+    > table {
+      line-height: 0;
+      > thead {
+        > tr:last-child th {
+          color: var(--ring-secondary-color);
+          border-bottom: .1px solid var(--ring-secondary-color);
+          font-weight: normal;
+        }
+        > tr > th {
+          height: 30px;
+        }
+      }
+      > tbody {
+        > tr:not(:last-child) td {
+          border-bottom: none;
+        }
+        > tr:hover, tr.active {
+          background: var(--ring-hover-background-color);
+        }
+        > tr > td {
+          height: 30px;
+        }
+      }
+    }
+  }
+}

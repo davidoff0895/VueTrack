@@ -1,20 +1,15 @@
 <template>
   <div class="users-list">
-    <v-text-field
-      v-model="searchText"
-      variant="outlined"
-      clearable
-      persistent-clear
-      placeholder="Filter users"
-      prepend-inner-icon="mdi-magnify"
-      type="text"
+    <UserFilter
+      :users="accounts"
+      @filterUsers="filterUsers"
     />
 
-    <h2 class="mt-3">
+    <h2 class="mt-3 users-list__title">
       {{ accounts.length }} Users
       <v-icon
         icon="mdi-help-circle-outline"
-        class="fz-15 cursor-pointer"
+        class="fz-15 cursor-pointer users-list__title__icon"
         :color="activeIconColor"
         @click="toggleUserInfo"
       />
@@ -52,7 +47,7 @@
           @close="closeNewUser"
         />
         <v-btn
-          v-if="selectedUsers.length"
+          v-if="isDeleteBtn"
           variant="outlined"
           color="error"
           class="ml-2"
@@ -66,12 +61,6 @@
           @close="closeDeleteDialog"
         />
       </div>
-      <v-btn
-        variant="outlined"
-      >
-        <v-icon icon="mdi-chevron-left" />
-        Details
-      </v-btn>
     </div>
 
     <v-table
@@ -86,13 +75,6 @@
               @click="checkAll"
               class="d-inline-flex"
             />
-          </th>
-          <th
-            class="cursor-pointer"
-            @click="sortBy('name')"
-          >
-            Full name
-            <v-icon :icon="sortByIcon('name')" />
           </th>
           <th
             class="cursor-pointer"
@@ -112,33 +94,32 @@
       </thead>
       <tbody class="users-table__tbody">
         <tr
-          v-for="user in accounts"
-          :key="user.id"
+          v-for="account in accounts"
+          :key="account.id"
           :class="{
-            active: isSelectedUser(user.id),
-            checked: user.isChecked,
+            active: isSelectedUser(account.id),
+            checked: account.isChecked,
           }"
           class="users-table__tbody__row"
-          @click="selectUser(user)"
+          @click="selectUser(account)"
         >
           <td>
             <v-checkbox
-              v-model="user.isChecked"
+              v-model="account.isChecked"
               class="d-inline-flex"
             />
           </td>
           <td class="d-flex align-center">
             <img
-              :src="user.avatar"
+              :src="account.avatar"
               width="20"
               class="mr-2"
             >
-            <router-link :to="user.profileLink">
-              {{ user.name }}
+            <router-link :to="account.profileLink">
+              {{ account.login }}
             </router-link>
           </td>
-          <td>{{ user.login }}</td>
-          <td>{{ user.registrationDate }}</td>
+          <td>{{ account.registrationDate }}</td>
         </tr>
       </tbody>
     </v-table>
@@ -150,20 +131,15 @@ import useUserModule from '@/store/user/module';
 import { computed, onMounted, Ref, ref, watch } from 'vue';
 import { MMMDyyyy } from '@/utils/dateFormat.js';
 import NewUserDialog from '@/components/users/NewUserDialog.vue';
-import { User } from '@/types/user/user';
 import DeleteUserDialog from '@/components/users/DeleteUserDialog.vue';
-
-interface UserTable extends User{
-  isChecked: boolean
-  registrationDate: string
-  profileLink: string,
-}
+import UserFilter from '@/components/users/UserFilter.vue';
+import { User } from '@/types/user/user';
+import { UserTable } from '@/types/user/userTable';
 
 const DECREACE = 'down';
 const INCREACE = 'up';
 
-const { getUsers, users } = useUserModule();
-const searchText = ref('');
+const { getUsers, users, user } = useUserModule();
 const accounts: Ref<UserTable[]> = ref([]);
 const isSelectedAll = ref(false);
 const isUserInfo = ref(false);
@@ -181,6 +157,8 @@ watch(accounts, () => {
   isSelectedAll.value = !notCheckedUser;
 }, { deep: true });
 
+const isDeleteBtn = computed(() => selectedUsers.value.length
+  && !selectedUsers.value.map(({ id }) => id).includes(user.value.id));
 const activeIconColor = computed(() =>
   isUserInfo.value ? 'secondary' : 'primary',
 );
@@ -190,7 +168,7 @@ const selectedUsers = computed(() => {
     return checkedUsers;
   }
   if (selectedUser.value) {
-    return [selectedUser];
+    return [selectedUser.value];
   }
   return [];
 });
@@ -199,9 +177,10 @@ const selectUser = (user: UserTable) => {
   selectedUser.value = user;
 };
 const isSelectedUser = (userId: string) => userId === selectedUser.value?.id;
-
-const fetchUsers = async () => {
-  await getUsers();
+const fetchUsers = async (isUpdate = true) => {
+  if (isUpdate) {
+    await getUsers();
+  }
   accounts.value = users.value.map((user) => fillUserInfo(user));
 };
 const fillUserInfo = (user: User): UserTable => ({
@@ -228,12 +207,24 @@ const checkAll = () => {
   });
 };
 const closeNewUser = (user) => {
-  accounts.value.push(fillUserInfo(user));
+  if (user) {
+    accounts.value.push(fillUserInfo(user));
+  }
   isNewUser.value = false;
 };
-const closeDeleteDialog = async () => {
-  await fetchUsers();
+const closeDeleteDialog = async (isRemoved = false) => {
+  if (isRemoved) {
+    await fetchUsers();
+  }
   isDeleteUser.value = false;
+  selectedUser.value = null;
+};
+const filterUsers = (user) => {
+  selectedUser.value = null;
+  if (user) {
+    return accounts.value = [user];
+  }
+  fetchUsers(false);
 };
 </script>
 
@@ -241,11 +232,17 @@ const closeDeleteDialog = async () => {
 .users-list {
   &__info {
     background: var(--ring-sidebar-background-color);
-    border-color: $line;
+    border-color: var(--ring-line-color);
     border-radius: 2px;
+    .mdi-close {
+      color: var(--icon) !important;
+    }
   }
   .v-selection-control--density-default {
     width: 0;
+  }
+  .v-field .v-field__clearable {
+    opacity: 1;
   }
 }
 .users-table {
@@ -257,5 +254,8 @@ const closeDeleteDialog = async () => {
       background: var(--ring-selected-background-color);
     }
   }
+}
+.users-list__title__icon.text-secondary {
+  color: var(--icon) !important;
 }
 </style>

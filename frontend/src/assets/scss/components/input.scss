@@ -1,0 +1,101 @@
+body {
+  input::placeholder {
+    font-size: 12px;
+    opacity: .65;
+  }
+  input[type=text], input[type=password] {
+    font-size: 12px;
+    background: none;
+    background-color: unset;
+    &:hover {
+      background: none;
+    }
+  }
+  .v-input--density-default .v-field--variant-solo, .v-input--density-default .v-field--variant-filled {
+    --v-input-control-height: 24px;
+  }
+  .v-field--variant-filled.v-field--focused .v-field__overlay {
+    opacity: 0;
+  }
+  .v-selection-control__input > .v-icon {
+    width: 14px;
+    height: 10px;
+  }
+  .v-text-field .v-input__details {
+    padding-inline-start: 0;
+  }
+}
+.v-field {
+  &__outline {
+    --v-field-border-opacity: 1;
+    color: var(--border);
+    &::after {
+      content: none !important;
+    }
+    &__start, &__end {
+      border-radius: unset !important;
+    }
+  }
+  &__prepend-inner {
+    color: var(--ring-secondary-color);
+    font-size: 12px;
+    align-items: center;
+  }
+  &__clearable {
+    align-items: center;
+    i {
+      transition: background-color .3s ease;
+      background-color: var(--ring-secondary-color);
+      color: var(--ring-content-background-color);
+      width: 10px;
+      height: 10px;
+    }
+    &:hover {
+      i {
+        background-color: $link-hover;
+      }
+    }
+  }
+  &--prepended {
+    padding-inline-start: 4px;
+  }
+  &--appended {
+    padding-inline-end: 4px;
+  }
+  &--active {
+    .v-field__outline {
+      &::before {
+        color: $primary;
+      }
+    }
+  }
+  &--variant-filled &__overlay {
+    background-color: transparent;
+  }
+  --v-field-padding-start: 4px;
+  --v-field-padding-end: 4px;
+}
+.v-field--variant-outlined.v-field--focused .v-field__outline {
+  --v-field-border-width: 1px;
+  color: $primary;
+}
+.v-input--density-default {
+  --v-input-control-height: 24px;
+  --v-input-padding-top: 0;
+}
+.v-input--density-default .v-field--variant-outlined, .v-input--density-default .v-field--single-line, .v-input--density-default .v-field--no-label {
+  --v-field-padding-bottom: 0px;
+}
+.v-autocomplete {
+  .v-field .v-field__input > input {
+    padding: 3px 3px 3px 10px;
+  }
+  &__selection-text {
+    font-size: 12px;
+    line-height: 24px;
+    margin-left: 4px;
+  }
+}
+.v-selection-control__input {
+  justify-content: unset;
+}

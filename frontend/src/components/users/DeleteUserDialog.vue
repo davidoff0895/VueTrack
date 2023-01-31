@@ -33,17 +33,18 @@
               <v-col cols="7">
                 <v-autocomplete
                   v-model="selectedUser"
-                  :items="users"
+                  :items="replacedUsers"
                   variant="outlined"
                   placeholder="Select user"
-                  item-title="name"
-                  item-value="name"
+                  item-title="login"
+                  item-value="login"
+                  return-object
                 >
-                  <template #item="{ props, item }">
+                  <template #item="data">
                     <v-list-item
-                      v-bind="props"
-                      :prepend-avatar="item?.raw?.avatar"
-                      :title="item?.raw?.name"
+                      v-bind="data.props"
+                      :prepend-avatar="data.item?.raw?.avatar"
+                      :title="data.item?.raw?.login"
                     />
                   </template>
                 </v-autocomplete>
@@ -54,9 +55,10 @@
             <v-btn
               type="submit"
               variant="outlined"
+              color="error"
               :disabled="!selectedUser"
             >
-              Create
+              Delete
             </v-btn>
             <v-btn
               variant="outlined"
@@ -72,7 +74,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
+import { computed, Ref, ref } from 'vue';
 import useUserModule from '@/store/user/module';
 import { User } from '@/types/user/user';
 
@@ -81,18 +83,18 @@ const { deleteUser, users } = useUserModule();
 
 const props = defineProps<{selectedUsers: User[]}>();
 
-const selectedUser = ref(null);
-
+const selectedUser: Ref<User> = ref(null);
 const isOpenedDialog = ref(true);
+
+const replacedUsers = computed(() =>
+  users.value.filter(({ id }) => !selectedUserIds.value.includes(id)),
+);
+const selectedUserIds = computed(() => props.selectedUsers.map(({ id }) => id));
 
 const submit = async () => {
   await Promise.all(props.selectedUsers.map(({ id }) =>
-    deleteUser(id, selectedUser),
+    deleteUser(id, selectedUser.value),
   ));
-  emit('close');
+  emit('close', true);
 };
 </script>
-
-<style lang="scss" scoped>
-
-</style>

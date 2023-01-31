@@ -27,6 +27,6 @@ export class UsersService implements UsersServiceInterface {
     return this.provider.post('/new', user);
   }
   deleteUser(id, user): Promise<string> {
-    return this.provider.post(`/${id}`, user);
+    return this.provider.delete(`/${id}`, { user });
   }
 }

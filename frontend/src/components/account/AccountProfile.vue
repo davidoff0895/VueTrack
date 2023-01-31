@@ -16,11 +16,6 @@
       />
     </template>
     <v-list class="account-profile__list">
-      <v-list-item class="account-profile__list__item">
-        <router-link to="/user/me">
-          Profile
-        </router-link>
-      </v-list-item>
       <v-list-item
         class="account-profile__list__item account-profile__list__dropdown"
       >

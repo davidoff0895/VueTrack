@@ -67,7 +67,8 @@
           <v-card-actions>
             <v-btn
               type="submit"
-              variant="outlined"
+              color="primary"
+              variant="flat"
               :disabled="$v.$invalid"
             >
               Create
